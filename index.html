@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Number Medicine — Feeling &amp; Geometry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --forest: #1F3A2E;
+    --ocean: #0E2433;
+    --earth: #5C4033;
+    --ivory: #F4F0E6;
+    --stone: #8A8680;
+    --gold: #C4A35A;
+    --copper: #B87333;
+    --olive: #6B6E3F;
+    --moon: #F7F7F2;
+    --ink: #1A1A18;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    background: var(--ivory);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* —— HERO —— */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 1.5rem 3rem;
+    background:
+      radial-gradient(ellipse at 50% 28%, rgba(196,163,90,0.09), transparent 55%),
+      var(--ivory);
+  }
+
+  .hero-kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 1.75rem;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    letter-spacing: 0.08em;
+    margin-bottom: 1.1rem;
+  }
+
+  .hero-sub {
+    max-width: 34rem;
+    font-size: 1.05rem;
+    color: var(--earth);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub em {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .hero-line {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.75rem auto 2rem;
+  }
+
+  .hero-twin {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    max-width: 40rem;
+  }
+
+  .hero-twin div {
+    text-align: left;
+    max-width: 16rem;
+  }
+
+  .hero-twin strong {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+    font-weight: 500;
+  }
+
+  .hero-twin p {
+    font-size: 0.88rem;
+    color: var(--earth);
+    line-height: 1.5;
+  }
+
+  /* —— SITE NAV (interactive tabs) —— */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: rgba(244,240,230,0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(90,64,51,0.12);
+    box-shadow: 0 4px 20px rgba(26,26,24,0.04);
+  }
+
+  .site-nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0.65rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .site-nav-brand {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    color: var(--ink);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-right: 0.5rem;
+    border-right: 1px solid rgba(90,64,51,0.15);
+  }
+
+  .site-nav-brand span {
+    color: var(--gold);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    display: block;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    margin-top: 0.1rem;
+  }
+
+  .site-nav-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding: 0.15rem 0;
+    flex: 1;
+  }
+
+  .site-nav-tabs::-webkit-scrollbar { height: 4px; }
+  .site-nav-tabs::-webkit-scrollbar-thumb {
+    background: rgba(90,64,51,0.25);
+    border-radius: 2px;
+  }
+
+  .site-nav-tabs a,
+  .site-nav-tabs button.tab-link {
+    flex: 0 0 auto;
+    appearance: none;
+    border: 1px solid rgba(90,64,51,0.16);
+    background: rgba(255,255,255,0.55);
+    color: var(--earth);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.48rem 0.72rem;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    line-height: 1.2;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .site-nav-tabs a:hover,
+  .site-nav-tabs button.tab-link:hover {
+    border-color: var(--gold);
+    color: var(--ink);
+    background: #fff;
+  }
+
+  .site-nav-tabs a.active,
+  .site-nav-tabs button.tab-link.active {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--moon);
+    box-shadow: 0 4px 14px rgba(31,58,46,0.2);
+  }
+
+  .site-nav-tabs a.external {
+    border-style: dashed;
+  }
+
+  .hero-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .hero-jump a {
+    flex: 0 0 auto;
+    border: 1px solid rgba(90,64,51,0.18);
+    background: rgba(255,255,255,0.65);
+    color: var(--forest);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .hero-jump a:hover {
+    border-color: var(--gold);
+    background: #fff;
+    color: var(--ink);
+  }
+
+  section,
+  header.hero {
+    scroll-margin-top: 4.5rem;
+  }
+
+  .panel-hidden { display: none !important; }
+
+  @media (max-width: 700px) {
+    .site-nav-brand span { display: none; }
+    .site-nav-brand { font-size: 0.85rem; padding-right: 0.4rem; }
+    .site-nav-tabs a,
+    .site-nav-tabs button.tab-link {
+      font-size: 0.64rem;
+      padding: 0.45rem 0.65rem;
+    }
+  }
+
+  /* —— SECTIONS —— */
+  section {
+    padding: 5.5rem 1.5rem;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.85rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .section-body {
+    max-width: 38rem;
+    color: var(--earth);
+    font-size: 1.02rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* —— PHILOSOPHY —— */
+  .philosophy {
+    background: var(--ocean);
+    color: var(--moon);
+    max-width: none;
+    padding: 5.5rem 1.5rem;
+  }
+
+  .philosophy-inner {
+    max-width: 740px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .philosophy .section-label { color: var(--gold); }
+  .philosophy .section-title { color: var(--moon); }
+
+  .philosophy p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.12rem, 2.4vw, 1.4rem);
+    line-height: 1.75;
+    color: rgba(247,247,242,0.9);
+    margin-bottom: 1.35rem;
+  }
+
+  .philosophy .quiet {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 2rem;
+  }
+
+  /* —— MAP INTRO —— */
+  .map-strip {
+    background: linear-gradient(180deg, #f7f3ea 0%, var(--ivory) 100%);
+    border-top: 1px solid rgba(90,64,51,0.08);
+    border-bottom: 1px solid rgba(90,64,51,0.08);
+    max-width: none;
+  }
+
+  .map-strip-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .map-quote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+    line-height: 1.6;
+    color: var(--earth);
+    margin-bottom: 1.5rem;
+    max-width: 36rem;
+  }
+
+  .map-note {
+    font-size: 0.9rem;
+    color: var(--stone);
+    max-width: 36rem;
+    line-height: 1.6;
+  }
+
+  /* —— GALLERY —— */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 2.25rem 1.5rem;
+  }
+
+  .card {
+    cursor: pointer;
+    transition: transform 0.35s ease;
+  }
+
+  .card:hover { transform: translateY(-3px); }
+  .card:focus { outline: 1px solid var(--gold); outline-offset: 4px; }
+
+  .card-image-wrap {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #e8e4da;
+    margin-bottom: 1rem;
+    box-shadow: 0 12px 40px rgba(26,26,24,0.08);
+  }
+
+  .card-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .card:hover .card-image-wrap img { transform: scale(1.03); }
+
+  .card-glyph {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 42px;
+    height: 56px;
+    background: rgba(244,240,230,0.88);
+    border: 1px solid rgba(90,64,51,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .card-glyph svg { width: 22px; height: 34px; }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 0.1rem;
+  }
+
+  .card-number {
+    font-weight: 200;
+    font-size: 1.7rem;
+    letter-spacing: 0.06em;
+  }
+
+  .card-word {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--earth);
+  }
+
+  .card-title {
+    font-size: 0.75rem;
+    color: var(--stone);
+    margin-top: 0.3rem;
+    padding: 0 0.1rem;
+  }
+
+  .card-kinetic {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-top: 0.45rem;
+    padding: 0 0.1rem;
+  }
+
+  .card-philosophy {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--earth);
+    margin-top: 0.5rem;
+    padding: 0 0.1rem;
+    line-height: 1.45;
+    max-width: 30ch;
+  }
+
+  /* —— DETAIL —— */
+  .detail {
+    display: none;
+    padding: 0;
+    max-width: none;
+  }
+
+  .detail.active {
+    display: block;
+    animation: fadeIn 0.45s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    min-height: 85vh;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 900px) {
+    .detail-inner { grid-template-columns: 1fr; }
+  }
+
+  .detail-visual {
+    background: #e8e4da;
+    position: relative;
+    min-height: 50vh;
+  }
+
+  .detail-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 58vh;
+  }
+
+  .detail-sky-pill {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    background: rgba(14,36,51,0.82);
+    color: rgba(244,240,230,0.95);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid rgba(196,163,90,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+
+  .detail-glyph-float {
+    position: absolute;
+    bottom: 3.6rem;
+    left: 1.25rem;
+    width: 72px;
+    height: 96px;
+    background: rgba(244,240,230,0.92);
+    border: 1px solid rgba(90,64,51,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .detail-glyph-float svg { width: 36px; height: 56px; }
+
+  .detail-copy {
+    padding: 3.5rem 2.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--ivory);
+  }
+
+  @media (max-width: 900px) {
+    .detail-copy { padding: 2.25rem 1.4rem 3.5rem; }
+  }
+
+  .close-detail {
+    align-self: flex-start;
+    margin-bottom: 1.5rem;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--stone);
+    cursor: pointer;
+  }
+
+  .close-detail:hover { color: var(--ink); }
+
+  .detail-number {
+    font-weight: 200;
+    font-size: 4.5rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.2rem;
+  }
+
+  .detail-word {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 0.4rem;
+  }
+
+  .detail-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-bottom: 1.1rem;
+  }
+
+  .detail-layers {
+    display: grid;
+    gap: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .layer {
+    border-left: 2px solid rgba(196,163,90,0.55);
+    padding-left: 0.9rem;
+  }
+
+  .layer h4 {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+
+  .layer p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--earth);
+  }
+
+  .layer p.small {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--ink);
+    opacity: 0.78;
+  }
+
+  .detail-story {
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.72;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    max-width: 42ch;
+  }
+
+  .detail-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--stone);
+    border-top: 1px solid rgba(90,64,51,0.14);
+    padding-top: 1.25rem;
+  }
+
+  .detail-meta strong {
+    display: block;
+    color: var(--forest);
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.62rem;
+  }
+
+  /* —— GEOMETRY JOURNEY —— */
+  .journey {
+    max-width: none;
+    background: var(--forest);
+    color: var(--moon);
+    padding: 5.5rem 1.5rem;
+  }
+
+  .journey-inner { max-width: 960px; margin: 0 auto; }
+
+  .journey .section-label { color: var(--gold); }
+  .journey .section-title { color: var(--moon); margin-bottom: 0.75rem; }
+
+  .journey-lead {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 1.65;
+    color: rgba(247,247,242,0.88);
+    max-width: 36rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .journey-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .journey-row {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1.25rem;
+    padding: 1.35rem 0;
+    border-top: 1px solid rgba(196,163,90,0.22);
+    align-items: start;
+  }
+
+  .journey-row:last-child { border-bottom: 1px solid rgba(196,163,90,0.22); }
+
+  .journey-glyph {
+    width: 56px;
+    height: 72px;
+    border: 1px solid rgba(196,163,90,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.15);
+  }
+
+  .journey-glyph svg {
+    width: 28px;
+    height: 44px;
+    stroke: var(--gold);
+    fill: none;
+  }
+
+  .journey-row h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 0.35rem;
+    color: var(--moon);
+  }
+
+  .journey-row .tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.45rem;
+  }
+
+  .journey-row p {
+    font-size: 0.92rem;
+    color: rgba(247,247,242,0.78);
+    line-height: 1.55;
+    max-width: 48rem;
+  }
+
+  /* —— FACTS —— */
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .fact-card {
+    background: white;
+    border: 1px solid rgba(90,64,51,0.12);
+    padding: 1.35rem 1.25rem;
+    box-shadow: 0 8px 28px rgba(26,26,24,0.04);
+  }
+
+  .fact-card h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 0.55rem;
+    color: var(--forest);
+  }
+
+  .fact-card p {
+    font-size: 0.9rem;
+    color: var(--earth);
+    line-height: 1.55;
+  }
+
+  .fact-card .label {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  /* —— PRACTICE —— */
+  .practice {
+    background: var(--ocean);
+    color: var(--moon);
+    max-width: none;
+    padding: 5.5rem 1.5rem;
+  }
+
+  .practice-inner { max-width: 960px; margin: 0 auto; }
+  .practice .section-label { color: var(--gold); }
+  .practice .section-title { color: var(--moon); }
+
+  .practice-lead {
+    font-size: 0.98rem;
+    color: rgba(247,247,242,0.75);
+    max-width: 36rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .practice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .practice-item {
+    border-top: 1px solid rgba(196,163,90,0.3);
+    padding-top: 1.1rem;
+  }
+
+  .practice-item .n {
+    font-weight: 200;
+    font-size: 1.45rem;
+    color: var(--gold);
+    margin-bottom: 0.2rem;
+  }
+
+  .practice-item .w {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(247,247,242,0.7);
+    margin-bottom: 0.55rem;
+  }
+
+  .practice-item p {
+    font-size: 0.88rem;
+    color: rgba(247,247,242,0.82);
+    line-height: 1.5;
+    margin-bottom: 0.45rem;
+  }
+
+  .practice-item .move {
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    line-height: 1.45;
+  }
+
+  /* —— PRODUCTS —— */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.85rem;
+  }
+
+  .product-chip {
+    border: 1px solid rgba(90,64,51,0.16);
+    padding: 1.1rem 0.85rem;
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--earth);
+    background: rgba(255,255,255,0.45);
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .product-chip:hover {
+    border-color: var(--gold);
+    background: white;
+  }
+
+  .product-showcase { margin-top: 2.5rem; }
+
+  .product-showcase img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 18px 55px rgba(26,26,24,0.1);
+  }
+
+  .product-caption {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 0.9rem;
+    text-align: center;
+  }
+
+  /* —— SYSTEM —— */
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1.25rem;
+  }
+
+  .swatch { width: 68px; text-align: center; }
+
+  .swatch-chip {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 0.35rem;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+  }
+
+  .swatch span {
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    color: var(--stone);
+    text-transform: uppercase;
+  }
+
+  .law-box {
+    margin-top: 2rem;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid rgba(196,163,90,0.4);
+    background: rgba(196,163,90,0.07);
+    max-width: 40rem;
+  }
+
+  .law-box strong {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 0.45rem;
+  }
+
+  .law-box p {
+    font-size: 0.92rem;
+    color: var(--earth);
+    line-height: 1.55;
+  }
+
+  /* —— FOOTER —— */
+  footer {
+    padding: 3.5rem 1.5rem 4.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(90,64,51,0.1);
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  footer .mark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.6rem;
+  }
+
+  footer .question {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--earth);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  footer p {
+    font-size: 0.78rem;
+    color: var(--stone);
+    letter-spacing: 0.05em;
+  }
+
+  footer a {
+    color: var(--forest);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(31,58,46,0.25);
+  }
+
+  /* glyph stroke default for cards */
+  .card-glyph svg {
+    stroke: var(--ink);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .detail-glyph-float svg {
+    stroke: var(--ink);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* —— CELESTIAL —— */
+  .celestial {
+    max-width: none;
+    background: linear-gradient(180deg, #0a1620 0%, #0E2433 55%, #132a3a 100%);
+    color: var(--moon);
+    padding: 5.5rem 1.5rem;
+  }
+  .celestial-inner { max-width: 960px; margin: 0 auto; }
+  .celestial .section-label { color: var(--gold); }
+  .celestial .section-title { color: var(--moon); }
+  .honesty {
+    border: 1px solid rgba(196,163,90,0.35);
+    background: rgba(0,0,0,0.25);
+    padding: 1.2rem 1.3rem;
+    margin: 1.25rem 0 2rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: rgba(247,247,242,0.82);
+  }
+  .honesty strong {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.45rem;
+    font-weight: 500;
+  }
+  .cel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  .cel-card {
+    border: 1px solid rgba(196,163,90,0.22);
+    background: rgba(255,255,255,0.03);
+    padding: 1.1rem 1.15rem;
+  }
+  .cel-card .n {
+    font-weight: 200;
+    font-size: 1.35rem;
+    color: var(--gold);
+  }
+  .cel-card .planet {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    margin: 0.25rem 0 0.35rem;
+  }
+  .cel-card .word {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(196,163,90,0.85);
+    margin-bottom: 0.45rem;
+  }
+  .cel-card p {
+    font-size: 0.82rem;
+    color: rgba(247,247,242,0.72);
+    line-height: 1.45;
+  }
+  .card-sky-pill {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.85rem;
+    background: rgba(14,36,51,0.78);
+    color: rgba(244,240,230,0.95);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.32rem 0.5rem;
+    border: 1px solid rgba(196,163,90,0.35);
+    backdrop-filter: blur(4px);
+    max-width: calc(100% - 5.5rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-celestial {
+    font-size: 0.68rem;
+    color: var(--stone);
+    margin-top: 0.28rem;
+    padding: 0 0.1rem;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+  }
+
+  .card-kind {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-top: 0.2rem;
+    padding: 0 0.1rem;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <p class="hero-kicker">Feeling · Geometry · Daily Practice</p>
+  <h1>NUMBER MEDICINE</h1>
+  <p class="hero-sub">
+    Nine living forms. Each one is an <em>emotional anchor</em>, a <em>geometric map</em>,
+    and a <em>celestial symbol</em> — feeling, kinetic song, and sky-story together.
+  </p>
+  <div class="hero-line"></div>
+  <div class="hero-twin">
+    <div>
+      <strong>Medicine</strong>
+      <p>When a form appears, a feeling returns. Love. Sharing. Home. Soft mind.</p>
+    </div>
+    <div>
+      <strong>Geometry</strong>
+      <p>The shape itself is instruction: stand, ground, open, cross, curve, spiral, give, loop, complete.</p>
+    </div>
+    <div>
+      <strong>Celestial</strong>
+      <p>Eight mapped lights — then beyond: the Universe · the Unknown. Sky-story for reflection, not a false ninth planet.</p>
+    </div>
+  </div>
+  <div class="hero-jump" aria-label="Quick links">
+    <a href="#collection">Enter the Nine</a>
+    <a href="#celestial">Eight · then beyond</a>
+    <a href="#practice">Daily practice</a>
+    <a href="products/index.html">Products</a>
+    <a href="products/meditation_cards.html">Cards</a>
+    <a href="products/social_carousel.html">Carousel</a>
+  </div>
+</header>
+
+<!-- STICKY INTERACTIVE TABS -->
+<nav class="site-nav" id="siteNav" aria-label="Primary">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="#top">NUMBER<span>Medicine</span></a>
+    <div class="site-nav-tabs" id="siteNavTabs" role="tablist">
+      <a href="#philosophy" class="tab-link" data-section="philosophy" role="tab">Philosophy</a>
+      <a href="#map" class="tab-link" data-section="map" role="tab">The Map</a>
+      <a href="#collection" class="tab-link" data-section="collection" role="tab">The Nine</a>
+      <a href="#journey" class="tab-link" data-section="journey" role="tab">Kinetic Path</a>
+      <a href="#facts" class="tab-link" data-section="facts" role="tab">Twin Facts</a>
+      <a href="#celestial" class="tab-link" data-section="celestial" role="tab">Celestial</a>
+      <a href="#practice" class="tab-link" data-section="practice" role="tab">Practice</a>
+      <a href="#products" class="tab-link" data-section="products" role="tab">Applications</a>
+      <a href="#system" class="tab-link" data-section="system" role="tab">System</a>
+      <a href="products/index.html" class="tab-link external">Products</a>
+      <a href="products/meditation_cards.html" class="tab-link external">Cards</a>
+      <a href="products/social_carousel.html" class="tab-link external">Carousel</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-inner">
+    <p class="section-label">Core Philosophy</p>
+    <h2 class="section-title">Stop only counting. Start reading the map.</h2>
+    <p>
+      This is not decoration. This is not superstition.
+      Every form from one to nine is a personal cue —
+      a quiet shift in state, and a physical instruction for the nervous system.
+    </p>
+    <p>
+      The artworks are seeds. The glyphs are paths.
+      Daily life is the garden where both grow.
+    </p>
+    <p class="quiet">Ancient yet futuristic · Minimal yet emotionally powerful</p>
+  </div>
+</section>
+
+<!-- MAP INTRO -->
+<section class="map-strip" id="map">
+  <div class="map-strip-inner">
+    <p class="section-label">The Geometric Teaching</p>
+    <h2 class="section-title">A kinetic map of reality</h2>
+    <p class="map-quote">
+      “Every number you see is a geometric map of your reality.
+      It’s not just a symbol. It’s a kinetic instruction —
+      a song that tells you exactly how to move your energy.”
+    </p>
+    <p class="map-note">
+      From pure initiation (the vertical of one) through the open loop of three,
+      the space–time cross of four, the inward coil of six, the receive–give–receive of seven,
+      the continuous loop of eight, to the inverted circuit of nine —
+      the shapes were never arbitrary. They are integration instructions.
+      Offered here as a mindfulness language you can feel with the body — not as absolute cosmic law.
+    </p>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section id="collection">
+  <p class="section-label">The Collection</p>
+  <h2 class="section-title">Nine pillars · two teachings</h2>
+  <p class="section-body">
+    Each card holds nature-medicine, glyph-geometry, and a sky pill —
+    mapped eight (Sun…Neptune) or beyond (Universe · the Unknown).
+    Click any piece to open Feel · Form · Move · Sky together.
+  </p>
+  <div class="gallery-grid" id="gallery"></div>
+</section>
+
+<!-- DETAIL -->
+<section class="detail" id="detail">
+  <div class="detail-inner">
+    <div class="detail-visual">
+      <img id="detail-img" src="" alt="" />
+      <div class="detail-glyph-float" id="detail-glyph" aria-hidden="true"></div>
+      <div class="detail-sky-pill" id="detail-sky-pill"></div>
+    </div>
+    <div class="detail-copy">
+      <button class="close-detail" type="button" onclick="closeDetail()">← Back to collection</button>
+      <div class="detail-number" id="detail-number">1</div>
+      <div class="detail-word" id="detail-word">LOVE</div>
+      <div class="detail-name" id="detail-name">The First Seed</div>
+
+      <div class="detail-layers">
+        <div class="layer">
+          <h4>Emotional medicine</h4>
+          <p id="detail-phil"></p>
+        </div>
+        <div class="layer">
+          <h4>Geometric form</h4>
+          <p id="detail-geometry"></p>
+        </div>
+        <div class="layer">
+          <h4>Kinetic instruction</h4>
+          <p class="small" id="detail-kinetic"></p>
+        </div>
+        <div class="layer">
+          <h4>Parallel fact</h4>
+          <p class="small" id="detail-fact"></p>
+        </div>
+        <div class="layer">
+          <h4>Celestial symbol</h4>
+          <p class="small" id="detail-celestial"></p>
+        </div>
+      </div>
+
+      <p class="detail-story" id="detail-story"></p>
+      <div class="detail-meta">
+        <div><strong>Trigger</strong><span id="detail-trigger"></span></div>
+        <div><strong>Metaphor</strong><span id="detail-metaphor"></span></div>
+        <div><strong>Palette</strong><span id="detail-palette"></span></div>
+        <div><strong>Mood</strong><span id="detail-mood"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KINETIC JOURNEY -->
+<section class="journey" id="journey">
+  <div class="journey-inner">
+    <p class="section-label">From initiation to completion</p>
+    <h2 class="section-title">The path of the nine shapes</h2>
+    <p class="journey-lead">
+      One pure line begins. Nine pours completion into the ground.
+      Between them: integration, open desire, time’s cross, soft change,
+      the material spiral, human exchange, the endless loop, and the divine circuit.
+    </p>
+    <div class="journey-list" id="journeyList"></div>
+  </div>
+</section>
+
+<!-- FACTS -->
+<section id="facts">
+  <p class="section-label">Underneath the teachings</p>
+  <h2 class="section-title">Unique parallels of the nine</h2>
+  <p class="section-body">
+    Patterns that rhyme with both emotional medicine and geometric kinetic reading —
+    mathematics, language history, and the body of the glyph itself.
+  </p>
+  <div class="facts-grid">
+    <article class="fact-card">
+      <div class="label">Twin circuit</div>
+      <h3>Six and nine are one shape turned</h3>
+      <p>
+        In the modern Western glyph set, six and nine are rotational twins.
+        The teaching names the difference as direction: outside→in (material coil)
+        versus within→down (completion that grounds). Same circuit, opposite song.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Digital root</div>
+      <h3>Nine always returns to itself</h3>
+      <p>
+        Multiply nine by any whole count and reduce the digits: you meet nine again.
+        A clean mathematical echo of “completion that remains itself” —
+        parallel to the inverted circuit that finishes without vanishing.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Infinity rhyme</div>
+      <h3>Eight on its side never ends</h3>
+      <p>
+        Turn eight, and culture already reads infinity.
+        That is why the kinetic map says: fiercely guard what you place in the loop —
+        home patterns and collective circuits keep circulating.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Human hand</div>
+      <h3>Five is the living tool-count</h3>
+      <p>
+        Across cultures, five maps to the hand — the body’s first calculator.
+        The glyph often keeps four’s sharp angle and adds a curve:
+        structure that learns softness. Self without statue.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Monad</div>
+      <h3>One is the simplest possible mark</h3>
+      <p>
+        Philosophies of the monad treat one as indivisible origin.
+        The glyph agrees: a single vertical stroke — pure initiation —
+        before relation (two) and story (three) can exist.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Site law</div>
+      <h3>Only one through nine appear here</h3>
+      <p>
+        This site refuses the empty mark and every count beyond the nine.
+        No void-glyph. No ten-and-after. The map is the living set alone —
+        so the nervous system meets only the complete kinetic alphabet of form.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Open triad</div>
+      <h3>Three is rhythm that will not seal</h3>
+      <p>
+        Beginning–middle–end, waltz time, triad harmony —
+        three is the world’s favorite open story unit.
+        The glyph’s stacked curves face openness: desire that discerns without closing forever.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Connection stroke</div>
+      <h3>Seven is almost pure vector</h3>
+      <p>
+        Unlike containers (six, eight, nine), seven is a path: receive, drive, receive.
+        It cuts the closed material trap with the geometry of conversation and breath —
+        the exact process of human connection.
+      </p>
+    </article>
+    <article class="fact-card">
+      <div class="label">Cross of time</div>
+      <h3>Four builds the world you stand in</h3>
+      <p>
+        Seasons, directions, lunar phases — folk systems lean on four for stability.
+        The teaching’s lunar angle and solar line meet where you actually live:
+        sudden night-shifts and the steady year, braided as purpose.
+      </p>
+    </article>
+  </div>
+</section>
+
+
+<!-- CELESTIAL -->
+<section class="celestial" id="celestial">
+  <div class="celestial-inner">
+    <p class="section-label">Third layer · Symbolic sky</p>
+    <h2 class="section-title">Eight mapped · then beyond</h2>
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.15rem;line-height:1.6;color:rgba(247,247,242,0.88);max-width:36rem;margin-bottom:1rem;">
+      Forms one through eight hold the mapped sky chart.
+      Form nine steps past every planet list — into the Universe · the Unknown.
+    </p>
+    <div class="honesty">
+      <strong>Astronomy &amp; meaning honesty</strong>
+      There are <strong>eight</strong> officially recognized planets in our Solar System.
+      On this site, forms <strong>one through eight</strong> are the <strong>mapped eight</strong> (Sun · Mercury · Venus · Mars · Earth · Jupiter · Saturn · Neptune).
+      Form <strong>nine</strong> is <strong>beyond the eight</strong>: <strong>the Universe · the Unknown</strong>.
+      It is never called a planet. The scientific <em>Planet Nine</em> hypothesis is separate, unobserved, and not what we mean here.
+      Contemplative sky-language — not a catalog of invented worlds.
+    </div>
+    <div class="cel-grid" id="celGrid"></div>
+    <p style="margin-top:1.75rem;font-size:0.85rem;color:rgba(247,247,242,0.55);">
+      Full table &amp; enrichment: <a href="system/CELESTIAL_MAP.md" style="color:var(--gold);">system/CELESTIAL_MAP.md</a>
+    </p>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="practice" id="practice">
+  <div class="practice-inner">
+    <p class="section-label">How it lives</p>
+    <h2 class="section-title">The daily practice</h2>
+    <p class="practice-lead">
+      When a form appears — clock, door, page, receipt — run all four:
+      <strong>Feel</strong> the medicine · <strong>Form</strong> the geometry · <strong>Move</strong> the body · <strong>Sky</strong> (mapped eight, or beyond: Universe · the Unknown).
+    </p>
+    <div class="practice-grid" id="practiceGrid"></div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <p class="section-label">Applications</p>
+  <h2 class="section-title">Where the language lives</h2>
+  <p class="section-body">
+    Museum prints, pocket cards, walls, fabric, screens —
+    so feeling, geometry, and sky (eight · then beyond) can enter ordinary life.
+  </p>
+  <div class="products-grid">
+    <div class="product-chip">Meditation Cards</div>
+    <div class="product-chip">Museum Posters</div>
+    <div class="product-chip">Canvas Prints</div>
+    <div class="product-chip">Phone Wallpapers</div>
+    <div class="product-chip">Desktop Wallpapers</div>
+    <div class="product-chip">Journal Covers</div>
+    <div class="product-chip">T-Shirts &amp; Hoodies</div>
+    <div class="product-chip">Book Covers</div>
+    <div class="product-chip">Sticker Packs</div>
+    <div class="product-chip">Metal Wall Art</div>
+    <div class="product-chip">Wooden Engravings</div>
+    <div class="product-chip">Coffee Mugs</div>
+    <div class="product-chip">Phone Cases</div>
+    <div class="product-chip">Notebook Covers</div>
+    <div class="product-chip">Social Carousels</div>
+    <div class="product-chip">Website Heroes</div>
+    <div class="product-chip">Tarot-inspired Cards</div>
+    <div class="product-chip">Brand Campaigns</div>
+  </div>
+  <div class="product-showcase">
+    <img src="products/poster_system_grid.jpg" alt="Nine framed prints on a gallery wall" />
+    <p class="product-caption">Exhibition concept — the nine as a complete wall language</p>
+  </div>
+  <p class="section-body" style="margin-top:2rem">
+    Product previews (Feel · Form · Move · Sky):
+    <a href="products/index.html" style="color:var(--forest);">Products hub</a>
+    ·
+    <a href="products/meditation_cards.html" style="color:var(--forest);">Meditation cards</a>
+    ·
+    <a href="products/social_carousel.html" style="color:var(--forest);">Social carousel</a>
+    ·
+    <a href="products/NEXT_SUGGESTIONS.html" style="color:var(--forest);">What to build next</a>
+  </p>
+</section>
+
+<!-- SYSTEM -->
+<section id="system">
+  <p class="section-label">Design system</p>
+  <h2 class="section-title">Color · Type · Laws</h2>
+  <p class="section-body">
+    Forest, ocean, earth, ivory, gold. Serif for the word.
+    Light architectural sans for the living digit. Negative space is sacred.
+    Glyph line-weight stays thin — calligraphy of energy, not a stamp.
+  </p>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-chip" style="background:#1F3A2E"></div><span>Forest</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#0E2433"></div><span>Ocean</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#5C4033"></div><span>Earth</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F4F0E6;border:1px solid #ddd"></div><span>Ivory</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#8A8680"></div><span>Stone</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#C4A35A"></div><span>Gold</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#B87333"></div><span>Copper</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#6B6E3F"></div><span>Olive</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F7F7F2;border:1px solid #ddd"></div><span>Moon</span></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#1A1A18"></div><span>Ink</span></div>
+  </div>
+
+  <div class="law-box">
+    <strong>Geometric site law</strong>
+    <p>
+      Only the living digits one through nine appear as numerals on this site.
+      No empty mark. No counts beyond the nine. Six and nine remain as the twin circuit —
+      direction of spiral is the lesson, not an extra alphabet.
+      Filenames may use padded stems for machines; the human eye meets only the nine.
+    </p>
+  </div>
+
+  <p class="section-body" style="margin-top:2.25rem">
+    Deep files:
+    <em>system/DESIGN_BIBLE.md</em> ·
+    <em>system/GEOMETRY_MAP.md</em> ·
+    <em>system/CELESTIAL_MAP.md</em> ·
+    <em>artworks collection brief</em>
+  </p>
+</section>
+
+<footer>
+  <div class="mark">NUMBER MEDICINE</div>
+  <p class="question">What does this form ask me to feel — and how does it ask me to move?</p>
+  <p>Designed to be inherited · Feel · Form · Move · Sky · Eight then beyond</p>
+  <p style="margin-top:1rem">
+    <a href="system/GEOMETRY_MAP.md">Read the full geometric map</a>
+    ·
+    <a href="system/CELESTIAL_MAP.md">Read the celestial map</a>
+  </p>
+</footer>
+
+<script>
+/* Glyph paths: pure stroke geometry for one–nine */
+const glyphs = {
+  "1": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M20 8 V56"/></svg>',
+  "2": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M8 18 C8 8, 32 8, 32 20 C32 32, 8 40, 8 52 H32"/></svg>',
+  "3": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M10 14 C10 6, 30 6, 30 16 C30 24, 18 28, 18 28 C18 28, 32 30, 32 42 C32 54, 10 56, 10 48"/></svg>',
+  "4": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M28 56 V12 L8 40 H34"/></svg>',
+  "5": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M30 10 H12 V30 C12 30, 32 28, 32 44 C32 56, 10 58, 10 46"/></svg>',
+  "6": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M28 12 C16 12, 10 24, 10 36 C10 50, 20 58, 28 52 C36 46, 36 34, 28 30 C20 26, 12 34, 14 42"/></svg>',
+  "7": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M8 12 H32 L14 56"/></svg>',
+  "8": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M20 32 C10 32, 10 12, 20 12 C30 12, 30 32, 20 32 C10 32, 10 54, 20 54 C30 54, 30 32, 20 32"/></svg>',
+  "9": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M12 52 C24 52, 30 40, 30 28 C30 14, 20 6, 12 12 C4 18, 4 30, 12 34 C20 38, 28 30, 26 22"/></svg>'
+};
+
+const pieces = [
+  {
+    n: "1",
+    word: "LOVE",
+    title: "The First Seed",
+    file: "artworks/01_LOVE.jpg",
+    trigger: "Unconditional presence · Quiet beginning",
+    phil: "Love is not earned. It is the ground under every step. One seed holds a forest. Begin here.",
+    geometry: "A single straight vertical line. Pure initiation. Source energy stabilizing as it enters the physical plane.",
+    kinetic: "Stand as the line. Stabilize. Energy cannot stay a point — let it begin to integrate.",
+    fact: "The monad: one as indivisible origin. The glyph is often the simplest human mark — a single upright stroke.",
+    planet: "Sun",
+    planetSymbol: "☀",
+    planetNote: "Source of the system. Everything depends on this fire — as love is source emotion.",
+    element: "Fire",
+    tree: "Oak",
+    animal: "Eagle",
+    story: "A single young tree in open field at first light. Soft fog. Pale sunrise — inevitable, not dramatic. Only this living form and the vastness that allows it.",
+    palette: "Ivory · Soft black · Sunset gold · Forest",
+    metaphor: "Single tree · Sunrise · Seed",
+    mood: "Quiet beginning · Warmth without noise",
+    practiceFeel: "Hand on chest for one breath. Love begins here.",
+    practiceMove: "Trace a vertical line in the air. Stand tall once.",
+    journey: "Pure initiation. The stabilization of source into form."
+  },
+  {
+    n: "2",
+    word: "SHARING",
+    title: "Two Become a Current",
+    file: "artworks/02_SHARING.jpg",
+    trigger: "Generosity · Connection · Friendship",
+    phil: "What you give does not leave you. It multiplies between hands. Friendship is a form of weather.",
+    geometry: "The upper curve rounds infinite possibility; the motion then grounds into a line of reality. Integration.",
+    kinetic: "Soften and open at the top — then ground the gift into the real.",
+    fact: "Two is the first true pair in language and life — the birth of relation, not mere quantity.",
+    planet: "Mercury",
+    planetSymbol: "☿",
+    planetNote: "The messenger. Sharing requires communication and exchange.",
+    element: "Air",
+    tree: "Bamboo",
+    animal: "Dove",
+    story: "Two trees side by side. Canopies nearly touch; roots intertwine below. A thin gold stream between. Two birds face the same direction.",
+    palette: "Forest · Warm earth · Ivory · Copper",
+    metaphor: "Two trees · Roots · Water",
+    mood: "Warm companionship · Quiet generosity",
+    practiceFeel: "Offer one small thing without being asked.",
+    practiceMove: "Draw the curve-to-ground of two. Give, then root.",
+    journey: "Infinite possibility curves into grounded relation."
+  },
+  {
+    n: "3",
+    word: "DESIRE",
+    title: "The Mountain That Calls",
+    file: "artworks/03_DESIRE.jpg",
+    trigger: "Healthy longing · Ambition · Curiosity",
+    phil: "Desire is a seed looking for light. Not greed — direction. Meet yourself at the height.",
+    geometry: "An open loop. Highs and lows visible; one side open. Discernment acts while reception stays possible.",
+    kinetic: "Feel peak and valley. Choose a step — keep the loop open to depth.",
+    fact: "Three is the open story unit worldwide: beginning–middle–end, triad, waltz. The glyph refuses to seal shut.",
+    planet: "Venus",
+    planetSymbol: "♀",
+    planetNote: "Attraction, beauty, longing — desire as a pull toward what is lovely.",
+    element: "Water",
+    tree: "Cherry",
+    animal: "Swan",
+    story: "Three seeds on dark soil; one shoot leans toward a distant mountain under sparse stars. A faint path. Gold on the mountain’s shoulder.",
+    palette: "Deep ocean · Soft black · Gold · Forest",
+    metaphor: "Seeds · Mountain · Path · Stars",
+    mood: "Calm ambition · Forward lean",
+    practiceFeel: "Name one honest longing without shame.",
+    practiceMove: "Trace the open three. Breathe high, low, open.",
+    journey: "Open loop — discernment with infinite depth still welcome."
+  },
+  {
+    n: "4",
+    word: "PURPOSE",
+    title: "The Path Underfoot",
+    file: "artworks/04_PURPOSE.jpg",
+    trigger: "Direction · Meaning · Discipline",
+    phil: "Purpose is not a shout from the peak. Walk. The path appears under the feet that move.",
+    geometry: "Two intersecting lines — construction of time. Lunar angle: sudden night-shifts. Solar line: steady year. You live at the cross.",
+    kinetic: "Honor the sharp turn and the long consistency. Stand in the intersection.",
+    fact: "Four maps stable world-structure in folk systems: seasons, directions, lunar phases. Angle plus stem — a form you can inhabit.",
+    planet: "Mars",
+    planetSymbol: "♂",
+    planetNote: "Action, courage, direction. Purpose requires movement.",
+    element: "Earth",
+    tree: "Pine",
+    animal: "Wolf",
+    story: "A narrow trail through tall grass. Wooden bridge. Footprints. One steady star in dusk. Invitation, not command.",
+    palette: "Warm earth · Olive · Stone · Ivory · Gold",
+    metaphor: "Path · Bridge · Footprints · Star",
+    mood: "Quiet direction · First-person invitation",
+    practiceFeel: "Take only the next small step.",
+    practiceMove: "Draw the cross of four. Name one sudden shift and one steady habit.",
+    journey: "Space–time cross — lunar shock meets solar rhythm."
+  },
+  {
+    n: "5",
+    word: "SELF",
+    title: "The Quiet Rings",
+    file: "artworks/05_SELF.jpg",
+    trigger: "Humanity · Growth · Identity",
+    phil: "You are not a finished statue. You are rings of weather survived and light received.",
+    geometry: "Holds the sharp angle of four, then curves at the base. Rapid change without rigid judgment — righteousness softens.",
+    kinetic: "Keep your edge. Drop the verdict. Bend through change.",
+    fact: "Five is the hand — the human tool-count. First common glyph to marry hard angle with a living lower curve.",
+    planet: "Earth",
+    planetSymbol: "🌍",
+    planetNote: "Where human life stands. The natural symbol for self.",
+    element: "Spirit",
+    tree: "Banyan",
+    animal: "Human",
+    story: "Tree-trunk cross-section fills the frame. Center: soft human silhouette of light only. A hand on outer bark.",
+    palette: "Warm earth · Soft black · Ivory · Copper",
+    metaphor: "Tree rings · Silhouette · Hand",
+    mood: "Intimate · Scientific poetry",
+    practiceFeel: "Ask: which ring am I growing in this season?",
+    practiceMove: "Trace five’s angle-into-curve. Unclench one judgment.",
+    journey: "The shift — structure that learns to curve."
+  },
+  {
+    n: "6",
+    word: "JOY",
+    title: "Golden Field, Quiet Heart",
+    file: "artworks/06_JOY.jpg",
+    trigger: "Gratitude · Contentment · Also: release grip",
+    phil: "Joy is sunlight on a field you almost walked past. Notice the warmth — then loosen the coil so joy does not become a trap.",
+    geometry: "Fibonacci-like spiral pulling outside → in, toward the material center. The flesh circuit: sweet, tight, hypnotic.",
+    kinetic: "Enjoy the gold. Then widen the spiral. Gratitude without grip.",
+    fact: "Six and nine are rotational twins. Six’s loop rides low — earth-weighted, inward song.",
+    planet: "Jupiter",
+    planetSymbol: "♃",
+    planetNote: "Expansion, generosity, abundance — joy that can grow too tight if gripped.",
+    element: "Sky",
+    tree: "Cedar",
+    animal: "Elephant",
+    story: "Vast golden field at peak hour. One elegant butterfly. Soft haze. The image is an exhale — beauty that must stay free.",
+    palette: "Sunset gold · Olive · Ivory · Warm earth",
+    metaphor: "Golden field · Butterfly · Warm light",
+    mood: "Contentment · Soft radiance · Alert softness",
+    practiceFeel: "Notice one quiet good thing.",
+    practiceMove: "Draw the inward six, then reverse the spiral once outward.",
+    journey: "Material coil — pleasure that must not imprison."
+  },
+  {
+    n: "7",
+    word: "BALANCE",
+    title: "Lake Holding Mountain",
+    file: "artworks/07_BALANCE.jpg",
+    trigger: "Light & shadow · Action & rest",
+    phil: "Balance is the lake that holds the mountain without becoming it. You need both edges of yourself.",
+    geometry: "Left to right: receivership, diagonal drive into giving, ground back into receiving. Exact geometry of human connection. Cuts the trap of six.",
+    kinetic: "In · out · in. Breath, friendship, exchange — three beats of seven.",
+    fact: "Seven is nearly pure vector — a path, not a sealed container. Culture often treats it as complete-but-not-final.",
+    planet: "Saturn",
+    planetSymbol: "♄",
+    planetNote: "Limits and structure teach balance — freedom held by responsibility.",
+    element: "Stone",
+    tree: "Olive",
+    animal: "Owl",
+    story: "Still mountain lake at blue hour. Perfect reflection. Moon and twin in water. Thin copper residual light on the horizon.",
+    palette: "Deep ocean · Soft black · Stone · Moon · Copper",
+    metaphor: "Mountain · Lake · Moon · Reflection",
+    mood: "Equilibrium · Cool calm",
+    practiceFeel: "Find the opposite edge of your current state.",
+    practiceMove: "Trace seven: receive line, give diagonal, receive again.",
+    journey: "Receive → give → receive. Connection that frees."
+  },
+  {
+    n: "8",
+    word: "HOME",
+    title: "Where the Light Waits",
+    file: "artworks/08_HOME.jpg",
+    trigger: "Comfort · Belonging · Sacred guard",
+    phil: "Home is the place that knows your weight in the chair. Whatever you set in this loop keeps running — choose with care.",
+    geometry: "Continuous double loop. Energy expands collectively. The construct does not stop; guard what you place inside.",
+    kinetic: "Name one pattern you call home. Keep it if it heals; redesign it if it harms.",
+    fact: "Eight sideways is the common infinity mark — the body already reads “does not end.”",
+    planet: "Neptune",
+    planetSymbol: "♆",
+    planetNote: "Ocean depth and soul-belonging. Home as the dream that must be guarded.",
+    element: "Ocean",
+    tree: "Willow",
+    animal: "Whale",
+    story: "Wooden cabin at autumn forest edge. One window glows gold. Soft smoke. Empty chair, folded blanket. Cool dusk; warm interior.",
+    palette: "Warm earth · Sunset gold · Forest · Soft black",
+    metaphor: "Cabin · Window light · Chair · Nest",
+    mood: "Safety · Soft arrival · Responsibility",
+    practiceFeel: "Put the day down at the threshold.",
+    practiceMove: "Trace the double loop. Ask: what am I circulating?",
+    journey: "Endless loop — belonging as power that must be guarded."
+  },
+  {
+    n: "9",
+    word: "THE UNIVERSE",
+    title: "The Same Breath",
+    file: "artworks/09_UNIVERSE.jpg",
+    trigger: "Infinity · Nature · Completion as gift",
+    phil: "You are not small. You are made of the same night. Completion pours from within into the ground.",
+    geometry: "Six inverted — the divine circuit. Not outside→in, but within→down into earth. Absolute process of completion.",
+    kinetic: "Start from inner fullness. Deliver downward into life. End as gift, not hoard.",
+    fact: "Nine’s digital root always returns to nine — mathematical rhyme of completion that remains itself. Loop rides high: sky-weighted twin of six.",
+    planet: "Universe · the Unknown",
+    planetSymbol: "✦",
+    planetNote: "Beyond the eight. Not a planet. The Universe is the whole; the Unknown is what no map finishes. Contemplative language, not a sky object.",
+    element: "Cosmos",
+    tree: "World Tree",
+    animal: "Phoenix",
+    story: "Night ocean under elegant stars. Whale’s curve echoes distant mountains. Subtle spiral in the sky. Vast and intimate at once.",
+    palette: "Deep ocean · Soft black · Moon white · Forest",
+    metaphor: "Whale · Stars · Mountains · Ocean · Spiral",
+    mood: "Vast intimacy · Quiet awe",
+    practiceFeel: "Remember you are made of the same night.",
+    practiceMove: "Trace nine from inner loop down to ground. Offer one completed thing.",
+    journey: "Within → earth. Completion as the final code."
+  }
+];
+
+const gallery = document.getElementById('gallery');
+const detail = document.getElementById('detail');
+const collection = document.getElementById('collection');
+const journeyList = document.getElementById('journeyList');
+const practiceGrid = document.getElementById('practiceGrid');
+
+pieces.forEach((p, i) => {
+  const el = document.createElement('article');
+  el.className = 'card';
+  el.tabIndex = 0;
+  el.setAttribute('role', 'button');
+  el.setAttribute('aria-label', 'Open ' + p.n + ' ' + p.word);
+  const skyPill = (p.n === '9')
+    ? (p.planetSymbol + ' Beyond')
+    : (p.planetSymbol + ' ' + p.planet);
+  const skyKind = (p.n === '9') ? 'Beyond the eight' : 'Mapped eight';
+  const skyLine = (p.n === '9')
+    ? (p.planetSymbol + ' ' + p.planet)
+    : (p.planetSymbol + ' ' + p.planet + ' · mapped eight');
+  el.innerHTML =
+    '<div class="card-image-wrap">' +
+      '<img src="' + p.file + '" alt="' + p.n + ' — ' + p.word + ': ' + p.title + '" loading="lazy" />' +
+      '<div class="card-glyph">' + glyphs[p.n] + '</div>' +
+      '<div class="card-sky-pill">' + skyPill + '</div>' +
+    '</div>' +
+    '<div class="card-meta">' +
+      '<span class="card-number">' + p.n + '</span>' +
+      '<span class="card-word">' + p.word + '</span>' +
+    '</div>' +
+    '<div class="card-title">' + p.title + '</div>' +
+    '<div class="card-kind">' + skyKind + '</div>' +
+    '<div class="card-kinetic">' + p.kinetic.split('.')[0] + '</div>' +
+    '<div class="card-celestial">' + skyLine + '</div>' +
+    '<p class="card-philosophy">' + p.phil.split('.').slice(0, 2).join('.') + '.</p>';
+  el.addEventListener('click', () => openDetail(i));
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(i); }
+  });
+  gallery.appendChild(el);
+
+  // journey row
+  const row = document.createElement('div');
+  row.className = 'journey-row';
+  const jSky = (p.n === '9')
+    ? (p.planetSymbol + ' Beyond · ' + p.planet)
+    : (p.planetSymbol + ' ' + p.planet + ' · mapped eight');
+  row.innerHTML =
+    '<div class="journey-glyph">' + glyphs[p.n] + '</div>' +
+    '<div>' +
+      '<div class="tag">' + p.n + ' · ' + p.word + ' · ' + jSky + '</div>' +
+      '<h3>' + p.title + '</h3>' +
+      '<p>' + p.journey + ' ' + p.geometry + '</p>' +
+    '</div>';
+  journeyList.appendChild(row);
+
+  // practice
+  const pr = document.createElement('div');
+  pr.className = 'practice-item';
+  const skyLine = (p.n === '9')
+    ? (p.planetSymbol + ' Beyond · ' + p.planet)
+    : (p.planetSymbol + ' ' + p.planet + ' · mapped eight');
+  pr.innerHTML =
+    '<div class="n">' + p.n + '</div>' +
+    '<div class="w">' + p.word + '</div>' +
+    '<p>' + p.practiceFeel + '</p>' +
+    '<div class="move">Move: ' + p.practiceMove + '</div>' +
+    '<div class="move" style="opacity:0.75;margin-top:0.35rem">Sky: ' + skyLine + '</div>';
+  practiceGrid.appendChild(pr);
+});
+
+const celGrid = document.getElementById('celGrid');
+if (celGrid) {
+  pieces.forEach(p => {
+    const c = document.createElement('article');
+    c.className = 'cel-card';
+    const kind = (p.n === '9') ? 'Beyond the eight' : 'Mapped eight';
+    c.innerHTML =
+      '<div class="n">' + p.n + '</div>' +
+      '<div class="planet">' + p.planetSymbol + ' ' + p.planet + '</div>' +
+      '<div class="word">' + p.word + ' · ' + kind + '</div>' +
+      '<p>' + p.planetNote + '</p>';
+    celGrid.appendChild(c);
+  });
+}
+
+function openDetail(i) {
+  const p = pieces[i];
+  document.getElementById('detail-img').src = p.file;
+  document.getElementById('detail-img').alt = p.n + ' ' + p.word;
+  document.getElementById('detail-glyph').innerHTML = glyphs[p.n];
+  const pillEl = document.getElementById('detail-sky-pill');
+  if (pillEl) {
+    pillEl.textContent = (p.n === '9')
+      ? (p.planetSymbol + ' Beyond · Universe · the Unknown')
+      : (p.planetSymbol + ' ' + p.planet);
+  }
+  document.getElementById('detail-number').textContent = p.n;
+  document.getElementById('detail-word').textContent = p.word;
+  document.getElementById('detail-name').textContent = p.title;
+  document.getElementById('detail-phil').textContent = p.phil;
+  document.getElementById('detail-geometry').textContent = p.geometry;
+  document.getElementById('detail-kinetic').textContent = p.kinetic;
+  document.getElementById('detail-fact').textContent = p.fact;
+  const skyKind = (p.n === '9') ? 'Beyond the eight' : 'Mapped eight';
+  document.getElementById('detail-celestial').textContent = p.planetSymbol + ' ' + p.planet + ' · ' + skyKind + ' — ' + p.planetNote + ' · Element: ' + p.element + ' · Tree: ' + p.tree + ' · Animal: ' + p.animal;
+  document.getElementById('detail-story').textContent = p.story;
+  document.getElementById('detail-trigger').textContent = p.trigger;
+  document.getElementById('detail-metaphor').textContent = p.metaphor;
+  document.getElementById('detail-palette').textContent = p.palette;
+  document.getElementById('detail-mood').textContent = p.mood;
+  detail.classList.add('active');
+  collection.style.opacity = '0.35';
+  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeDetail() {
+  detail.classList.remove('active');
+  collection.style.opacity = '1';
+  collection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+
+/* —— Interactive sticky tabs —— */
+(function () {
+  const tabs = Array.from(document.querySelectorAll('#siteNavTabs a.tab-link[data-section]'));
+  const sectionIds = tabs.map(a => a.getAttribute('data-section'));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  function setActive(id) {
+    tabs.forEach(a => {
+      const on = a.getAttribute('data-section') === id;
+      a.classList.toggle('active', on);
+      a.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  // Smooth scroll with sticky offset handled via scroll-margin-top
+  tabs.forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('data-section');
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      // close detail if open so destination is visible
+      if (typeof closeDetail === 'function') {
+        try { closeDetail(); } catch (err) {}
+      }
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#' + id);
+      setActive(id);
+      // keep active tab visible in horizontal scroller
+      a.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  });
+
+  // Hero jump links that are hashes
+  document.querySelectorAll('.hero-jump a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      if (typeof closeDetail === 'function') {
+        try { closeDetail(); } catch (err) {}
+      }
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#' + id);
+      setActive(id);
+    });
+  });
+
+  // Scroll spy
+  function onScroll() {
+    const y = window.scrollY + 90;
+    let current = sectionIds[0];
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      if (el.offsetTop <= y) current = id;
+    }
+    setActive(current);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('load', () => {
+    onScroll();
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setActive(id);
+        }, 80);
+      }
+    }
+  });
+  onScroll();
+})();
+
+</script>
+</body>
+</html>
