@@ -1,8 +1,10 @@
-# NUMBER MEDICINE
-### Feel · Form · Move · Sky
+# THE LANGUAGE OF NINE
+### Also known as Number Medicine · Feel · Form · Move · Sky
 
-> *What does this form ask me to feel — and how does it ask me to move?*  
-> *Mapped eight · then beyond: Universe · the Unknown*
+> *Every number you see can remind you how you wish to live.*
+
+A **symbolic mindfulness language**—not numerology, not prediction.  
+Nine living forms. When one appears in daily life, it becomes a quiet cue.
 
 Nine living forms. Each carries **four layers**:
 
@@ -48,30 +50,54 @@ Deep read: `system/GEOMETRY_MAP.md` · `system/CELESTIAL_MAP.md` · `system/DESI
 
 ```
 number-medicine/
-├── index.html                      ← Main site (sticky interactive tabs)
+├── index.html                 ← Experiential home (chapters · today · FFMS)
+├── manifesto.html             ← Philosophy
+├── search.html                ← Search by quality
+├── serve.sh                   ← Local server
+├── TROUBLESHOOTING.md
 ├── README.md
+├── assets/
+│   └── chrome.css             ← Shared polish chrome
 ├── artworks/
 │   ├── 01_LOVE.jpg … 09_UNIVERSE.jpg
-│   └── 01_COMPLETE_COLLECTION.md   ← Design briefs + AI prompts
+│   └── 01_COMPLETE_COLLECTION.md
 ├── products/
-│   ├── index.html                  ← Products hub
-│   ├── meditation_cards.html       ← Feel · Form · Move · Sky deck
-│   ├── social_carousel.html        ← Social path (eight · then beyond)
-│   ├── NEXT_SUGGESTIONS.html       ← Roadmap
+│   ├── index.html             ← Ecosystem hub
+│   ├── meditation_cards.html
+│   ├── social_carousel.html
+│   ├── NEXT_SUGGESTIONS.html
 │   ├── poster_system_grid.jpg
 │   └── wallpaper_specs.md
 └── system/
-    ├── DESIGN_BIBLE.md             ← Creative constitution
-    ├── GEOMETRY_MAP.md             ← Kinetic teaching
-    ├── CELESTIAL_MAP.md            ← Eight mapped · then beyond
-    └── TYPOGRAPHY_OVERLAYS.md      ← Type + sky-pill production notes
+    ├── IP_ROADMAP.md          ← Phases 1–9
+    ├── DESIGN_BIBLE.md
+    ├── GEOMETRY_MAP.md
+    ├── CELESTIAL_MAP.md
+    └── TYPOGRAPHY_OVERLAYS.md
 ```
+
+---
+
+## IP (not random features)
+
+Public brand: **The Language of Nine** · System name: Number Medicine  
+
+**Design language (everywhere):** Feel · Form · Move · Sky  
+
+**Phases:** `system/IP_ROADMAP.md`  
+**Manifesto:** `manifesto.html`  
+**Search by quality:** `search.html`  
+**Today's Number:** homepage memory section + daily banner  
+
+Deepen before you expand. Recognition without logo is the milestone.
 
 ---
 
 ## How to view
 
-1. **`index.html`** — main experience; sticky tabs; gallery sky pills; celestial section  
+1. **`index.html`** — experiential chapters · Today's Number · FFMS on every form
+2. **`manifesto.html`** — philosophy
+3. **`search.html`** — search by quality  
 2. **`products/index.html`** — products hub  
 3. **`products/meditation_cards.html`** — pocket deck mockup  
 4. **`products/social_carousel.html`** — post frames  
@@ -111,4 +137,4 @@ When a form appears in life:
 
 ---
 
-*Number Medicine · Feel · Form · Move · Sky · Eight then beyond · Designed to be inherited*
+*The Language of Nine · Also known as Number Medicine · Feel · Form · Move · Sky · Eight then beyond · Designed to be inherited*

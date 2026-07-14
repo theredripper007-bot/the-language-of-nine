@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Search — The Language of Nine</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #F3EBDD; --cedar: #3D2E24; --clay: #6B4A38; --ash: #7A756C;
+    --brass: #B8955A; --ink: #161411; --moss: #24382C; --linen: #EFE6D6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif; font-weight: 300;
+    background: var(--paper); color: var(--ink); line-height: 1.6;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+  nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ash);
+    text-decoration: none;
+  }
+  nav a:hover { color: var(--ink); }
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400;
+    font-size: clamp(1.9rem, 5vw, 2.6rem); color: var(--cedar); margin-bottom: 0.5rem;
+  }
+  .lead {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+    color: var(--clay); margin-bottom: 2rem; font-size: 1.15rem;
+  }
+  label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass);
+    display: block; margin-bottom: 0.5rem;
+  }
+  input[type="search"] {
+    width: 100%; border: 1px solid rgba(61,46,36,0.2);
+    background: #fff; padding: 0.9rem 1rem;
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.35rem;
+    color: var(--ink); outline: none;
+  }
+  input[type="search"]:focus { border-color: var(--brass); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1rem 0 2rem; }
+  .chips button {
+    appearance: none; border: 1px solid rgba(61,46,36,0.15);
+    background: rgba(255,255,255,0.7); font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.4rem 0.65rem; cursor: pointer; color: var(--clay);
+  }
+  .chips button:hover { border-color: var(--brass); color: var(--ink); }
+  .result {
+    background: #fff; border: 1px solid rgba(61,46,36,0.1);
+    padding: 1.5rem 1.35rem; margin-bottom: 1rem;
+  }
+  .result .n {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.5rem; font-weight: 300; line-height: 1;
+  }
+  .result .w {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--brass);
+    font-size: 0.9rem; margin: 0.25rem 0 1rem;
+  }
+  .ffms { margin-top: 0.75rem; }
+  .ffms div { margin-bottom: 0.75rem; }
+  .ffms strong {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass);
+    display: block; margin-bottom: 0.2rem; font-weight: 400;
+  }
+  .ffms span {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; color: var(--cedar);
+  }
+  .empty {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+    color: var(--ash); font-size: 1.15rem; margin-top: 1.5rem;
+  }
+  .go {
+    display: inline-block; margin-top: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--moss);
+    text-decoration: none; border-bottom: 1px solid rgba(36,56,44,0.25);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="manifesto.html">Manifesto</a>
+    <a href="search.html">Search</a>
+    <a href="index.html#memory">Today</a>
+    <a href="products/index.html">Ecosystem</a>
+    <a href="products/meditation_cards.html">Cards</a>
+    <a href="system/IP_ROADMAP.md">Roadmap</a>
+  </nav>
+
+  <h1>Search the language</h1>
+  <p class="lead">Not by superstition — by the quality you need.</p>
+
+  <label for="q">Quality or word</label>
+  <input id="q" type="search" placeholder="love · balance · home · purpose · beyond…" autocomplete="off" />
+
+  <div class="chips" id="chips"></div>
+  <div id="out"></div>
+</div>
+
+<script>
+const catalog = [
+  {
+    n: "1", w: "LOVE",
+    keys: "love compassion source begin seed oak sun kindness heart first",
+    feel: "Compassion. Unconditional presence.",
+    form: "A single oak at first light. Vertical line.",
+    move: "Offer kindness. Smile at someone.",
+    sky: "The sun rises for everyone."
+  },
+  {
+    n: "2", w: "SHARING",
+    keys: "sharing generosity friendship give thanks mercury river connection",
+    feel: "Generosity. Connection.",
+    form: "Two trees. Roots intertwined. Curve into ground.",
+    move: "Give thanks out loud. Offer one unasked thing.",
+    sky: "Mercury — the messenger between us."
+  },
+  {
+    n: "3", w: "DESIRE",
+    keys: "desire longing want ambition venus mountain dream curiosity",
+    feel: "Healthy longing. Clean ambition.",
+    form: "Mountain and seed. Open loop.",
+    move: "Name one true want. Take one step only.",
+    sky: "Venus — attraction without greed."
+  },
+  {
+    n: "4", w: "PURPOSE",
+    keys: "purpose path step direction mars walk discipline meaning",
+    feel: "Direction without force.",
+    form: "An ancient path. Space–time cross.",
+    move: "Take one deliberate step.",
+    sky: "Mars — motion with courage."
+  },
+  {
+    n: "5", w: "SELF",
+    keys: "self identity growth rings posture earth human judgment",
+    feel: "Identity as growth.",
+    form: "Tree rings. Angle that curves.",
+    move: "Straighten posture. Soften one judgment.",
+    sky: "Earth — where you stand."
+  },
+  {
+    n: "6", w: "JOY",
+    keys: "joy gratitude breath complete meadow jupiter notice happiness",
+    feel: "Gratitude without performance.",
+    form: "Golden field. Inward spiral — then loosen.",
+    move: "Notice something already complete. One deep breath.",
+    sky: "Jupiter — abundance that stays free."
+  },
+  {
+    n: "7", w: "BALANCE",
+    keys: "balance rest neglect both edges saturn lake mountain wisdom",
+    feel: "Both edges of yourself.",
+    form: "Lake holding mountain. Receive → give → receive.",
+    move: "Ask what you are neglecting.",
+    sky: "Saturn — structure that teaches balance."
+  },
+  {
+    n: "8", w: "HOME",
+    keys: "home belonging safety nest cabin neptune comfort rest",
+    feel: "Belonging. Safety.",
+    form: "Warm window. Double loop — guard the pattern.",
+    move: "Put the day down. Go home early if you can.",
+    sky: "Neptune — depth of belonging."
+  },
+  {
+    n: "9", w: "THE UNIVERSE",
+    keys: "universe unknown beyond cosmos awe night stars completion infinite god mystery",
+    feel: "Awe without fear. Completion as gift.",
+    form: "Night ocean. Within → ground.",
+    move: "Look up. Offer one completed thing.",
+    sky: "Beyond the eight — Universe · the Unknown."
+  }
+];
+
+const out = document.getElementById('out');
+const q = document.getElementById('q');
+const chips = document.getElementById('chips');
+
+["love","sharing","desire","purpose","self","joy","balance","home","beyond"].forEach(word => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = word;
+  b.addEventListener('click', () => { q.value = word; render(word); });
+  chips.appendChild(b);
+});
+
+function render(term) {
+  const t = (term || '').trim().toLowerCase();
+  out.innerHTML = '';
+  if (!t) {
+    out.innerHTML = '<p class="empty">Begin with a quality you need.</p>';
+    return;
+  }
+  const hits = catalog.filter(c =>
+    c.w.toLowerCase().includes(t) ||
+    c.keys.includes(t) ||
+    c.feel.toLowerCase().includes(t) ||
+    c.move.toLowerCase().includes(t) ||
+    c.sky.toLowerCase().includes(t)
+  );
+  if (!hits.length) {
+    out.innerHTML = '<p class="empty">Nothing found. Try love, balance, home, purpose…</p>';
+    return;
+  }
+  hits.forEach(c => {
+    const el = document.createElement('article');
+    el.className = 'result';
+    el.innerHTML =
+      '<div class="n">' + c.n + '</div>' +
+      '<div class="w">' + c.w + '</div>' +
+      '<div class="ffms">' +
+        '<div><strong>Feel</strong><span>' + c.feel + '</span></div>' +
+        '<div><strong>Form</strong><span>' + c.form + '</span></div>' +
+        '<div><strong>Move</strong><span>' + c.move + '</span></div>' +
+        '<div><strong>Sky</strong><span>' + c.sky + '</span></div>' +
+      '</div>' +
+      '<a class="go" href="index.html#ch-' + c.n + '">Open chapter ' + c.n + '</a>';
+    out.appendChild(el);
+  });
+}
+
+q.addEventListener('input', () => render(q.value));
+// deep link ?q=
+const params = new URLSearchParams(location.search);
+if (params.get('q')) {
+  q.value = params.get('q');
+  render(q.value);
+} else {
+  render('');
+}
+</script>
+</body>
+</html>

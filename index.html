@@ -3,1886 +3,1132 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Number Medicine — Feeling &amp; Geometry</title>
+<title>The Language of Nine</title>
+<meta name="description" content="A quiet space for symbolic mindfulness. Nine living forms. Mapped eight, then beyond." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --forest: #1F3A2E;
-    --ocean: #0E2433;
-    --earth: #5C4033;
-    --ivory: #F4F0E6;
-    --stone: #8A8680;
-    --gold: #C4A35A;
-    --copper: #B87333;
-    --olive: #6B6E3F;
-    --moon: #F7F7F2;
-    --ink: #1A1A18;
+    /* Material pigments — moss, linen, ash, clay, mist, brass */
+    --moss: #24382C;
+    --deep-moss: #1A2B22;
+    --cedar: #3D2E24;
+    --clay: #6B4A38;
+    --linen: #EFE6D6;
+    --paper: #F3EBDD;
+    --mist: #D8D2C6;
+    --ash: #7A756C;
+    --brass: #B8955A;
+    --brass-soft: #C9A96A;
+    --ink: #161411;
+    --moon: #F7F3EB;
+    --fog: rgba(243,235,221,0.55);
+    --chapter-tint: rgba(36,56,44,0.0);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-
   body {
     font-family: 'Inter', system-ui, sans-serif;
     font-weight: 300;
-    background: var(--ivory);
     color: var(--ink);
+    background: var(--paper);
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
+  body.is-locked { overflow: hidden; }
 
-  /* —— HERO —— */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 1.5rem 3rem;
+  /* Paper grain */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Slow ambient light */
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: 2; pointer-events: none;
     background:
-      radial-gradient(ellipse at 50% 28%, rgba(196,163,90,0.09), transparent 55%),
-      var(--ivory);
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(184,149,90,0.09), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(36,56,44,0.06), transparent 50%);
+    animation: ambientLight 18s ease-in-out infinite alternate;
+  }
+  @keyframes ambientLight {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
   }
 
-  .hero-kicker {
-    font-size: 0.7rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--stone);
-    margin-bottom: 1.75rem;
-  }
+  .layer-ui { position: relative; z-index: 10; }
 
-  .hero h1 {
+  /* —— CINEMA GATE —— */
+  .cinema {
+    position: fixed; inset: 0; z-index: 1000;
+    background: #0A0B0A; color: var(--moon);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 1.4s ease, visibility 1.4s;
+  }
+  .cinema.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
+  .cinema-stage { text-align: center; position: relative; width: min(92vw, 520px); }
+  .cinema-num {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 400;
-    font-size: clamp(2.6rem, 7vw, 5rem);
-    letter-spacing: 0.08em;
-    margin-bottom: 1.1rem;
+    font-weight: 300; font-size: clamp(5rem, 18vw, 9rem);
+    line-height: 0.9; letter-spacing: 0.04em;
+    opacity: 0; animation: softIn 2s ease 0.3s forwards;
   }
-
-  .hero-sub {
-    max-width: 34rem;
-    font-size: 1.05rem;
-    color: var(--earth);
-    margin-bottom: 1.25rem;
-  }
-
-  .hero-sub em {
+  .cinema-word {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    color: var(--ink);
+    font-weight: 400; font-size: clamp(1.4rem, 4vw, 2rem);
+    letter-spacing: 0.45em; text-transform: uppercase;
+    margin-top: 0.5rem; color: var(--brass-soft);
+    opacity: 0; animation: softIn 2s ease 2s forwards;
   }
-
-  .hero-line {
-    width: 48px;
-    height: 1px;
-    background: var(--gold);
-    margin: 1.75rem auto 2rem;
+  .cinema-tree {
+    margin: 2.5rem auto 0; width: min(70vw, 280px); height: 200px;
+    opacity: 0; animation: treeIn 3.5s ease 3.2s forwards;
+    background:
+      url("artworks/01_LOVE.jpg") center 40% / cover no-repeat;
+    mask-image: linear-gradient(to top, transparent 0%, #000 18%, #000 100%);
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 18%, #000 100%);
+    filter: saturate(0.85) brightness(0.9);
   }
-
-  .hero-twin {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem 2.5rem;
-    justify-content: center;
-    margin-bottom: 2.5rem;
-    max-width: 40rem;
-  }
-
-  .hero-twin div {
-    text-align: left;
-    max-width: 16rem;
-  }
-
-  .hero-twin strong {
-    display: block;
-    font-size: 0.65rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.35rem;
-    font-weight: 500;
-  }
-
-  .hero-twin p {
-    font-size: 0.88rem;
-    color: var(--earth);
-    line-height: 1.5;
-  }
-
-  /* —— SITE NAV (interactive tabs) —— */
-  .site-nav {
-    position: sticky;
-    top: 0;
-    z-index: 200;
-    background: rgba(244,240,230,0.94);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(90,64,51,0.12);
-    box-shadow: 0 4px 20px rgba(26,26,24,0.04);
-  }
-
-  .site-nav-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0.65rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .site-nav-brand {
+  .cinema-line {
+    margin-top: 2.25rem;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.14em;
-    text-decoration: none;
-    color: var(--ink);
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding-right: 0.5rem;
-    border-right: 1px solid rgba(90,64,51,0.15);
+    font-style: italic; font-weight: 400;
+    font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+    line-height: 1.5; color: rgba(247,243,235,0.78);
+    opacity: 0; animation: softIn 2s ease 5s forwards;
   }
-
-  .site-nav-brand span {
-    color: var(--gold);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    display: block;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    margin-top: 0.1rem;
+  .cinema-enter {
+    margin-top: 2.5rem; appearance: none; background: transparent;
+    border: 1px solid rgba(184,149,90,0.4); color: rgba(247,243,235,0.85);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 0.85rem 1.4rem; cursor: pointer; border-radius: 1px;
+    opacity: 0; animation: softIn 1.5s ease 6s forwards;
+    transition: background 0.3s, color 0.3s;
   }
-
-  .site-nav-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.4rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    padding: 0.15rem 0;
-    flex: 1;
-  }
-
-  .site-nav-tabs::-webkit-scrollbar { height: 4px; }
-  .site-nav-tabs::-webkit-scrollbar-thumb {
-    background: rgba(90,64,51,0.25);
-    border-radius: 2px;
-  }
-
-  .site-nav-tabs a,
-  .site-nav-tabs button.tab-link {
-    flex: 0 0 auto;
-    appearance: none;
-    border: 1px solid rgba(90,64,51,0.16);
-    background: rgba(255,255,255,0.55);
-    color: var(--earth);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.48rem 0.72rem;
-    border-radius: 999px;
-    cursor: pointer;
-    white-space: nowrap;
-    line-height: 1.2;
-    transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
-  }
-
-  .site-nav-tabs a:hover,
-  .site-nav-tabs button.tab-link:hover {
-    border-color: var(--gold);
-    color: var(--ink);
-    background: #fff;
-  }
-
-  .site-nav-tabs a.active,
-  .site-nav-tabs button.tab-link.active {
-    background: var(--forest);
-    border-color: var(--forest);
-    color: var(--moon);
-    box-shadow: 0 4px 14px rgba(31,58,46,0.2);
-  }
-
-  .site-nav-tabs a.external {
-    border-style: dashed;
-  }
-
-  .hero-jump {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
-
-  .hero-jump a {
-    flex: 0 0 auto;
-    border: 1px solid rgba(90,64,51,0.18);
-    background: rgba(255,255,255,0.65);
-    color: var(--forest);
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.5rem 0.8rem;
-    border-radius: 999px;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
-
-  .hero-jump a:hover {
-    border-color: var(--gold);
-    background: #fff;
-    color: var(--ink);
-  }
-
-  section,
-  header.hero {
-    scroll-margin-top: 4.5rem;
-  }
-
-  .panel-hidden { display: none !important; }
-
-  @media (max-width: 700px) {
-    .site-nav-brand span { display: none; }
-    .site-nav-brand { font-size: 0.85rem; padding-right: 0.4rem; }
-    .site-nav-tabs a,
-    .site-nav-tabs button.tab-link {
-      font-size: 0.64rem;
-      padding: 0.45rem 0.65rem;
-    }
-  }
-
-  /* —— SECTIONS —— */
-  section {
-    padding: 5.5rem 1.5rem;
-    max-width: 1120px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--stone);
-    margin-bottom: 0.85rem;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 400;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    margin-bottom: 1.25rem;
-  }
-
-  .section-body {
-    max-width: 38rem;
-    color: var(--earth);
-    font-size: 1.02rem;
-    margin-bottom: 2.5rem;
-  }
-
-  /* —— PHILOSOPHY —— */
-  .philosophy {
-    background: var(--ocean);
-    color: var(--moon);
-    max-width: none;
-    padding: 5.5rem 1.5rem;
-  }
-
-  .philosophy-inner {
-    max-width: 740px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .philosophy .section-label { color: var(--gold); }
-  .philosophy .section-title { color: var(--moon); }
-
-  .philosophy p {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(1.12rem, 2.4vw, 1.4rem);
-    line-height: 1.75;
-    color: rgba(247,247,242,0.9);
-    margin-bottom: 1.35rem;
-  }
-
-  .philosophy .quiet {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-top: 2rem;
-  }
-
-  /* —— MAP INTRO —— */
-  .map-strip {
-    background: linear-gradient(180deg, #f7f3ea 0%, var(--ivory) 100%);
-    border-top: 1px solid rgba(90,64,51,0.08);
-    border-bottom: 1px solid rgba(90,64,51,0.08);
-    max-width: none;
-  }
-
-  .map-strip-inner {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .map-quote {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: clamp(1.2rem, 2.5vw, 1.55rem);
-    line-height: 1.6;
-    color: var(--earth);
-    margin-bottom: 1.5rem;
-    max-width: 36rem;
-  }
-
-  .map-note {
-    font-size: 0.9rem;
-    color: var(--stone);
-    max-width: 36rem;
-    line-height: 1.6;
-  }
-
-  /* —— GALLERY —— */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 2.25rem 1.5rem;
-  }
-
-  .card {
-    cursor: pointer;
-    transition: transform 0.35s ease;
-  }
-
-  .card:hover { transform: translateY(-3px); }
-  .card:focus { outline: 1px solid var(--gold); outline-offset: 4px; }
-
-  .card-image-wrap {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background: #e8e4da;
-    margin-bottom: 1rem;
-    box-shadow: 0 12px 40px rgba(26,26,24,0.08);
-  }
-
-  .card-image-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .card:hover .card-image-wrap img { transform: scale(1.03); }
-
-  .card-glyph {
-    position: absolute;
-    top: 0.85rem;
-    right: 0.85rem;
-    width: 42px;
-    height: 56px;
-    background: rgba(244,240,230,0.88);
-    border: 1px solid rgba(90,64,51,0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-  }
-
-  .card-glyph svg { width: 22px; height: 34px; }
-
-  .card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 0 0.1rem;
-  }
-
-  .card-number {
-    font-weight: 200;
-    font-size: 1.7rem;
-    letter-spacing: 0.06em;
-  }
-
-  .card-word {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    color: var(--earth);
-  }
-
-  .card-title {
-    font-size: 0.75rem;
-    color: var(--stone);
-    margin-top: 0.3rem;
-    padding: 0 0.1rem;
-  }
-
-  .card-kinetic {
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-top: 0.45rem;
-    padding: 0 0.1rem;
-  }
-
-  .card-philosophy {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    color: var(--earth);
-    margin-top: 0.5rem;
-    padding: 0 0.1rem;
-    line-height: 1.45;
-    max-width: 30ch;
-  }
-
-  /* —— DETAIL —— */
-  .detail {
-    display: none;
-    padding: 0;
-    max-width: none;
-  }
-
-  .detail.active {
-    display: block;
-    animation: fadeIn 0.45s ease;
-  }
-
-  @keyframes fadeIn {
+  .cinema-enter:hover { background: var(--brass); color: var(--ink); border-color: var(--brass); }
+  @keyframes softIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  .detail-inner {
-    display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    min-height: 85vh;
-    max-width: 1400px;
-    margin: 0 auto;
+  @keyframes treeIn {
+    from { opacity: 0; transform: scale(1.04); filter: blur(6px) brightness(0.7); }
+    to { opacity: 0.95; transform: scale(1); filter: saturate(0.85) brightness(0.9); }
   }
 
-  @media (max-width: 900px) {
-    .detail-inner { grid-template-columns: 1fr; }
+  /* —— EXHIBITION NAV —— */
+  .exhibit-nav {
+    position: fixed; left: 0; top: 0; bottom: 0; z-index: 100;
+    width: 56px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.35rem;
+    padding: 1rem 0;
+    background: linear-gradient(90deg, rgba(243,235,221,0.92), rgba(243,235,221,0));
+    pointer-events: none;
+  }
+  .exhibit-nav a {
+    pointer-events: auto;
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid rgba(122,117,108,0.35);
+    background: transparent; color: transparent;
+    font-size: 0; text-decoration: none; position: relative;
+    transition: 0.35s ease;
+  }
+  .exhibit-nav a::after {
+    content: attr(data-n);
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem;
+    color: var(--ash); letter-spacing: 0;
+  }
+  .exhibit-nav a:hover,
+  .exhibit-nav a.active {
+    border-color: var(--brass); background: rgba(184,149,90,0.12);
+  }
+  .exhibit-nav a.active::after { color: var(--cedar); }
+  .exhibit-nav a:hover .nav-label,
+  .exhibit-nav a:focus .nav-label {
+    opacity: 1; transform: translateX(0);
+  }
+  .nav-label {
+    position: absolute; left: 36px; top: 50%; transform: translate(6px, -50%);
+    white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cedar); opacity: 0; transition: 0.3s; pointer-events: none;
+  }
+  @media (max-width: 800px) {
+    .exhibit-nav {
+      left: 0; right: 0; top: auto; bottom: 0; width: 100%; height: 56px;
+      flex-direction: row; justify-content: center; gap: 0.45rem;
+      background: linear-gradient(0deg, rgba(243,235,221,0.96), rgba(243,235,221,0.7) 70%, transparent);
+      padding: 0.5rem 0.75rem 0.85rem;
+    }
+    .nav-label { display: none; }
+    .exhibit-nav a { width: 30px; height: 30px; }
   }
 
-  .detail-visual {
-    background: #e8e4da;
-    position: relative;
-    min-height: 50vh;
+  /* Top bar — silence */
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 1.25rem 1.1rem 4.5rem;
+    pointer-events: none;
+  }
+  @media (max-width: 800px) {
+    .top-bar { padding: 0.9rem 1rem 0.9rem 1rem; }
+  }
+  .top-bar a, .top-bar button {
+    pointer-events: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ash); text-decoration: none; background: none; border: none; cursor: pointer;
+  }
+  .top-bar a:hover, .top-bar button:hover { color: var(--ink); }
+  .top-links { display: flex; gap: 1.1rem; flex-wrap: wrap; justify-content: flex-end; }
+
+  .top-bar { z-index: 200; }
+  .top-links a.top-page {
+    color: var(--cedar);
+    border-bottom: 1px solid rgba(184,149,90,0.45);
+    padding-bottom: 2px;
+  }
+  .top-links a.top-page:hover { color: var(--ink); border-color: var(--brass); }
+  .cinema.is-gone { z-index: -1; }
+  /* When locked under cinema, hide UI chrome from interaction confusion */
+  body.is-locked .layer-ui { visibility: hidden; }
+  body:not(.is-locked) .layer-ui { visibility: visible; }
+
+
+  /* Tree progress */
+  .tree-progress {
+    position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+    z-index: 90; font-size: 1.1rem; opacity: 0.55; pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  @media (max-width: 800px) {
+    .tree-progress { top: auto; bottom: 4.2rem; right: 0.85rem; transform: none; }
   }
 
-  .detail-visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    min-height: 58vh;
+  /* —— CHAPTERS —— */
+  .chapter {
+    min-height: 100vh; min-height: 100dvh;
+    position: relative; display: flex; align-items: stretch;
+    scroll-margin-top: 0;
   }
-
-  .detail-sky-pill {
-    position: absolute;
-    left: 1.25rem;
-    bottom: 1.25rem;
-    background: rgba(14,36,51,0.82);
-    color: rgba(244,240,230,0.95);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.4rem 0.6rem;
-    border: 1px solid rgba(196,163,90,0.4);
-    backdrop-filter: blur(4px);
-    z-index: 2;
+  .chapter-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-size: cover; background-position: center;
+    transform: scale(1.03);
+    transition: transform 1.2s ease;
+    filter: saturate(0.9) contrast(1.02);
   }
-
-  .detail-glyph-float {
-    position: absolute;
-    bottom: 3.6rem;
-    left: 1.25rem;
-    width: 72px;
-    height: 96px;
-    background: rgba(244,240,230,0.92);
-    border: 1px solid rgba(90,64,51,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  .chapter.is-near .chapter-bg { transform: scale(1.0); }
+  .chapter-veil {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(15,14,12,0.55) 0%, rgba(15,14,12,0.22) 42%, rgba(15,14,12,0.35) 100%),
+      linear-gradient(0deg, rgba(15,14,12,0.5) 0%, transparent 40%);
   }
-
-  .detail-glyph-float svg { width: 36px; height: 56px; }
-
-  .detail-copy {
-    padding: 3.5rem 2.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: var(--ivory);
+  .chapter-mist {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: radial-gradient(ellipse 70% 40% at 50% 100%, rgba(243,235,221,0.18), transparent 60%);
+    animation: mistDrift 14s ease-in-out infinite alternate;
   }
-
-  @media (max-width: 900px) {
-    .detail-copy { padding: 2.25rem 1.4rem 3.5rem; }
+  @keyframes mistDrift {
+    from { opacity: 0.5; transform: translateY(0); }
+    to { opacity: 0.9; transform: translateY(-12px); }
   }
-
-  .close-detail {
-    align-self: flex-start;
-    margin-bottom: 1.5rem;
-    background: none;
-    border: none;
-    font-family: inherit;
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--stone);
-    cursor: pointer;
-  }
-
-  .close-detail:hover { color: var(--ink); }
-
-  .detail-number {
-    font-weight: 200;
-    font-size: 4.5rem;
-    line-height: 1;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.2rem;
-  }
-
-  .detail-word {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.05rem;
-    letter-spacing: 0.38em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-bottom: 0.4rem;
-  }
-
-  .detail-name {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.7rem;
-    font-weight: 500;
-    margin-bottom: 1.1rem;
-  }
-
-  .detail-layers {
-    display: grid;
-    gap: 1.1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .layer {
-    border-left: 2px solid rgba(196,163,90,0.55);
-    padding-left: 0.9rem;
-  }
-
-  .layer h4 {
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.3rem;
-    font-weight: 500;
-  }
-
-  .layer p {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.05rem;
-    line-height: 1.55;
-    color: var(--earth);
-  }
-
-  .layer p.small {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.88rem;
-    color: var(--ink);
-    opacity: 0.78;
-  }
-
-  .detail-story {
-    font-size: 0.9rem;
-    color: var(--ink);
-    opacity: 0.72;
-    line-height: 1.65;
-    margin-bottom: 1.5rem;
-    max-width: 42ch;
-  }
-
-  .detail-meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.9rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
-    color: var(--stone);
-    border-top: 1px solid rgba(90,64,51,0.14);
-    padding-top: 1.25rem;
-  }
-
-  .detail-meta strong {
-    display: block;
-    color: var(--forest);
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.62rem;
-  }
-
-  /* —— GEOMETRY JOURNEY —— */
-  .journey {
-    max-width: none;
-    background: var(--forest);
+  .chapter-content {
+    position: relative; z-index: 3;
+    width: 100%; max-width: 640px;
+    margin: auto 0 auto clamp(4.5rem, 10vw, 8rem);
+    padding: 5.5rem 1.5rem 5.5rem;
     color: var(--moon);
-    padding: 5.5rem 1.5rem;
+  }
+  @media (max-width: 800px) {
+    .chapter-content {
+      margin: auto 0 0 0; padding: 5rem 1.25rem 6.5rem;
+      max-width: 100%;
+      background: linear-gradient(0deg, rgba(15,14,12,0.72), transparent);
+    }
   }
 
-  .journey-inner { max-width: 960px; margin: 0 auto; }
-
-  .journey .section-label { color: var(--gold); }
-  .journey .section-title { color: var(--moon); margin-bottom: 0.75rem; }
-
-  .journey-lead {
+  .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(247,243,235,0.55); margin-bottom: 1.5rem;
+  }
+  .ch-num {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.2rem;
-    line-height: 1.65;
-    color: rgba(247,247,242,0.88);
-    max-width: 36rem;
+    font-weight: 300; font-size: clamp(4.5rem, 12vw, 7rem);
+    line-height: 0.9; letter-spacing: 0.02em;
+  }
+  .ch-word {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--brass-soft); margin: 0.6rem 0 1.75rem;
+  }
+  .ch-poem {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-weight: 400;
+    font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+    line-height: 1.45; max-width: 16em;
     margin-bottom: 2.5rem;
   }
-
-  .journey-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+  .ch-practice {
+    margin-bottom: 2rem;
   }
-
-  .journey-row {
-    display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 1.25rem;
-    padding: 1.35rem 0;
-    border-top: 1px solid rgba(196,163,90,0.22);
-    align-items: start;
+  .ch-practice .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(184,149,90,0.9); margin-bottom: 0.45rem;
   }
-
-  .journey-row:last-child { border-bottom: 1px solid rgba(196,163,90,0.22); }
-
-  .journey-glyph {
-    width: 56px;
-    height: 72px;
-    border: 1px solid rgba(196,163,90,0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.15);
-  }
-
-  .journey-glyph svg {
-    width: 28px;
-    height: 44px;
-    stroke: var(--gold);
-    fill: none;
-  }
-
-  .journey-row h3 {
+  .ch-practice p {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    font-size: 1.2rem;
-    margin-bottom: 0.35rem;
-    color: var(--moon);
+    font-size: 1.2rem; font-weight: 400;
   }
-
-  .journey-row .tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.45rem;
+  .ch-open {
+    appearance: none; background: transparent;
+    border: 1px solid rgba(247,243,235,0.28); color: rgba(247,243,235,0.85);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 0.75rem 1.1rem; cursor: pointer; transition: 0.3s;
   }
-
-  .journey-row p {
-    font-size: 0.92rem;
-    color: rgba(247,247,242,0.78);
-    line-height: 1.55;
-    max-width: 48rem;
+  .ch-open:hover {
+    border-color: var(--brass); color: var(--brass-soft);
+    background: rgba(184,149,90,0.08);
   }
-
-  /* —— FACTS —— */
-  .facts-grid {
+  .ffms-strip {
+    margin: 0 0 1.75rem;
+    padding: 1rem 0 0;
+    border-top: 1px solid rgba(247,243,235,0.18);
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .fact-card {
-    background: white;
-    border: 1px solid rgba(90,64,51,0.12);
-    padding: 1.35rem 1.25rem;
-    box-shadow: 0 8px 28px rgba(26,26,24,0.04);
-  }
-
-  .fact-card h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.15rem;
-    font-weight: 500;
-    margin-bottom: 0.55rem;
-    color: var(--forest);
-  }
-
-  .fact-card p {
-    font-size: 0.9rem;
-    color: var(--earth);
-    line-height: 1.55;
-  }
-
-  .fact-card .label {
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
-
-  /* —— PRACTICE —— */
-  .practice {
-    background: var(--ocean);
-    color: var(--moon);
-    max-width: none;
-    padding: 5.5rem 1.5rem;
-  }
-
-  .practice-inner { max-width: 960px; margin: 0 auto; }
-  .practice .section-label { color: var(--gold); }
-  .practice .section-title { color: var(--moon); }
-
-  .practice-lead {
-    font-size: 0.98rem;
-    color: rgba(247,247,242,0.75);
-    max-width: 36rem;
-    margin-bottom: 2.25rem;
-  }
-
-  .practice-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .practice-item {
-    border-top: 1px solid rgba(196,163,90,0.3);
-    padding-top: 1.1rem;
-  }
-
-  .practice-item .n {
-    font-weight: 200;
-    font-size: 1.45rem;
-    color: var(--gold);
-    margin-bottom: 0.2rem;
-  }
-
-  .practice-item .w {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(247,247,242,0.7);
-    margin-bottom: 0.55rem;
-  }
-
-  .practice-item p {
-    font-size: 0.88rem;
-    color: rgba(247,247,242,0.82);
-    line-height: 1.5;
-    margin-bottom: 0.45rem;
-  }
-
-  .practice-item .move {
-    font-size: 0.75rem;
-    color: var(--gold);
-    letter-spacing: 0.04em;
-    line-height: 1.45;
-  }
-
-  /* —— PRODUCTS —— */
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 0.85rem;
   }
-
-  .product-chip {
-    border: 1px solid rgba(90,64,51,0.16);
-    padding: 1.1rem 0.85rem;
-    text-align: center;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--earth);
-    background: rgba(255,255,255,0.45);
-    transition: border-color 0.3s, background 0.3s;
-  }
-
-  .product-chip:hover {
-    border-color: var(--gold);
-    background: white;
-  }
-
-  .product-showcase { margin-top: 2.5rem; }
-
-  .product-showcase img {
-    width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-    display: block;
-    box-shadow: 0 18px 55px rgba(26,26,24,0.1);
-  }
-
-  .product-caption {
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--stone);
-    margin-top: 0.9rem;
-    text-align: center;
-  }
-
-  /* —— SYSTEM —— */
-  .swatches {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    margin-top: 1.25rem;
-  }
-
-  .swatch { width: 68px; text-align: center; }
-
-  .swatch-chip {
-    width: 68px;
-    height: 68px;
-    margin-bottom: 0.35rem;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
-  }
-
-  .swatch span {
-    font-size: 0.58rem;
-    letter-spacing: 0.06em;
-    color: var(--stone);
-    text-transform: uppercase;
-  }
-
-  .law-box {
-    margin-top: 2rem;
-    padding: 1.25rem 1.35rem;
-    border: 1px solid rgba(196,163,90,0.4);
-    background: rgba(196,163,90,0.07);
-    max-width: 40rem;
-  }
-
-  .law-box strong {
-    display: block;
-    font-size: 0.65rem;
+  .ffms-strip div strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--copper);
-    margin-bottom: 0.45rem;
+    color: rgba(184,149,90,0.95);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-weight: 400;
+  }
+  .ffms-strip div span {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    color: rgba(247,243,235,0.9);
+  }
+  .today-banner {
+    position: fixed; right: 1rem; bottom: 5.5rem; z-index: 95;
+    max-width: 220px;
+    background: rgba(26,43,34,0.92);
+    color: var(--moon);
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(184,149,90,0.35);
+    font-size: 0.85rem;
+    backdrop-filter: blur(8px);
+  }
+  @media (max-width: 800px) {
+    .today-banner { left: 0.75rem; right: 0.75rem; bottom: 4.5rem; max-width: none; }
+  }
+  .today-banner .tb-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--brass-soft); margin-bottom: 0.35rem;
+  }
+  .today-banner .tb-n {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.8rem; font-weight: 300; line-height: 1;
+  }
+  .today-banner .tb-w {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    font-size: 0.75rem; color: var(--brass-soft); margin: 0.2rem 0 0.45rem;
+  }
+  .today-banner .tb-m {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-size: 0.95rem; line-height: 1.35;
+    color: rgba(247,243,235,0.85);
+  }
+  .today-banner a {
+    display: inline-block; margin-top: 0.55rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--brass-soft); text-decoration: none;
   }
 
-  .law-box p {
-    font-size: 0.92rem;
-    color: var(--earth);
-    line-height: 1.55;
+  .glyph-float {
+    position: absolute; right: 8%; top: 18%; z-index: 3;
+    width: 52px; height: 70px; opacity: 0.55;
+    border: 1px solid rgba(247,243,235,0.2);
+    background: rgba(15,14,12,0.25);
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .glyph-float svg {
+    width: 26px; height: 42px; stroke: rgba(247,243,235,0.85);
+    fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  @media (max-width: 800px) {
+    .glyph-float { right: 1.1rem; top: 5.5rem; width: 40px; height: 54px; }
+    .glyph-float svg { width: 20px; height: 32px; }
+  }
+
+  /* —— THRESHOLD (between silence and system) —— */
+  .threshold {
+    min-height: 70vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 1.5rem;
+    background: var(--paper);
+  }
+  .threshold blockquote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-weight: 400;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    line-height: 1.45; max-width: 16em; color: var(--cedar);
+  }
+  .threshold p {
+    margin-top: 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  /* —— MEMORY —— */
+  .memory {
+    padding: 5.5rem 1.5rem 6rem;
+    background: var(--deep-moss); color: var(--moon);
+  }
+  .memory-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+  .memory .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--brass-soft); margin-bottom: 1.25rem;
+  }
+  .memory h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400; font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 0.75rem;
+  }
+  .memory .lead {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-size: 1.15rem;
+    color: rgba(247,243,235,0.7); margin-bottom: 2rem;
+  }
+  .memory-grid {
+    display: grid; grid-template-columns: repeat(9, 1fr); gap: 0.4rem;
+    max-width: 420px; margin: 0 auto 1.75rem;
+  }
+  @media (max-width: 500px) {
+    .memory-grid { grid-template-columns: repeat(3, 1fr); max-width: 240px; }
+  }
+  .memory-grid button {
+    appearance: none; aspect-ratio: 1;
+    border: 1px solid rgba(184,149,90,0.28);
+    background: rgba(255,255,255,0.03); color: var(--moon);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.35rem; font-weight: 300; cursor: pointer; transition: 0.25s;
+  }
+  .memory-grid button:hover,
+  .memory-grid button.picked {
+    border-color: var(--brass); background: rgba(184,149,90,0.15); color: var(--brass-soft);
+  }
+  .memory-out {
+    min-height: 4.5rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem; line-height: 1.5; color: rgba(247,243,235,0.9);
+  }
+  .memory-note {
+    margin-top: 1.25rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(247,243,235,0.4);
+  }
+
+  /* —— REVEAL (quiet system) —— */
+  .reveal {
+    padding: 6rem 1.5rem; background: var(--linen); max-width: none;
+  }
+  .reveal-inner { max-width: 560px; margin: 0 auto; }
+  .reveal .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ash); margin-bottom: 1.25rem;
+  }
+  .reveal h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400; font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin-bottom: 1.5rem; color: var(--cedar);
+  }
+  .reveal p {
+    font-size: 1rem; color: var(--clay); margin-bottom: 1.25rem;
+  }
+  .reveal .quote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-size: 1.35rem; color: var(--ink);
+    margin: 2rem 0; line-height: 1.45;
+  }
+  .layers {
+    display: grid; gap: 1.25rem; margin: 2.25rem 0;
+  }
+  .layers div {
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid rgba(107,74,56,0.15);
+  }
+  .layers strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--brass); display: block; margin-bottom: 0.3rem; font-weight: 400;
+  }
+  .honesty {
+    margin-top: 2rem; padding: 1.25rem 0 0;
+    border-top: 1px solid rgba(107,74,56,0.15);
+    font-size: 0.88rem; color: var(--ash); line-height: 1.6;
+  }
+  .reveal-links {
+    display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem;
+  }
+  .reveal-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--cedar); text-decoration: none;
+    border-bottom: 1px solid rgba(61,46,36,0.25); padding-bottom: 2px;
+  }
+
+  /* —— ECOSYSTEM —— */
+  .eco {
+    padding: 5.5rem 1.5rem 6rem; background: var(--moss); color: var(--moon);
+  }
+  .eco-inner { max-width: 720px; margin: 0 auto; }
+  .eco .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--brass-soft); margin-bottom: 1rem;
+  }
+  .eco h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400; font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin-bottom: 1rem;
+  }
+  .eco .lead {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-size: 1.2rem;
+    color: rgba(247,243,235,0.7); margin-bottom: 2.25rem; max-width: 22em;
+  }
+  .eco-list { list-style: none; }
+  .eco-list li {
+    border-top: 1px solid rgba(247,243,235,0.12);
+    padding: 1rem 0;
+  }
+  .eco-list li:last-child { border-bottom: 1px solid rgba(247,243,235,0.12); }
+  .eco-list a {
+    display: flex; justify-content: space-between; align-items: baseline;
+    text-decoration: none; color: var(--moon); gap: 1rem;
+  }
+  .eco-list a:hover { color: var(--brass-soft); }
+  .eco-list span {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem;
+  }
+  .eco-list em {
+    font-family: 'IBM Plex Mono', monospace; font-style: normal;
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(247,243,235,0.45); white-space: nowrap;
   }
 
   /* —— FOOTER —— */
-  footer {
-    padding: 3.5rem 1.5rem 4.5rem;
-    text-align: center;
-    border-top: 1px solid rgba(90,64,51,0.1);
-    max-width: 1120px;
-    margin: 0 auto;
+  .end {
+    padding: 7rem 1.5rem 6rem; text-align: center; background: var(--paper);
   }
-
-  footer .mark {
+  .end p {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.3rem;
-    letter-spacing: 0.18em;
-    margin-bottom: 0.6rem;
+    font-style: italic; font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+    color: var(--cedar); line-height: 1.5; max-width: 14em; margin: 0 auto 1.5rem;
+  }
+  .end .remember {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ash);
   }
 
-  footer .question {
+  /* —— DRAWER —— */
+  .drawer {
+    position: fixed; inset: 0; z-index: 400; display: none;
+    background: rgba(22,20,17,0.4); backdrop-filter: blur(6px);
+  }
+  .drawer.open { display: block; }
+  .drawer-sheet {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: min(440px, 100%);
+    background: var(--linen);
+    padding: 2.25rem 1.75rem 3rem;
+    overflow-y: auto;
+    animation: sheetIn 0.4s ease;
+  }
+  @keyframes sheetIn {
+    from { transform: translateX(30px); opacity: 0.5; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  .drawer-close {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+    background: none; border: none; color: var(--ash); cursor: pointer; margin-bottom: 2rem;
+  }
+  .drawer .ch-num { color: var(--ink); font-size: 3.5rem; }
+  .drawer .ch-word { color: var(--brass); margin-bottom: 1.5rem; }
+  .d-layer { margin-bottom: 1.35rem; }
+  .d-layer label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--brass); display: block; margin-bottom: 0.35rem;
+  }
+  .d-layer p {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 1.3rem;
-    color: var(--earth);
-    margin: 1.5rem 0 0.75rem;
+    font-size: 1.15rem; color: var(--cedar); line-height: 1.5;
+  }
+  .d-layer p.plain {
+    font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--clay);
   }
 
-  footer p {
-    font-size: 0.78rem;
-    color: var(--stone);
-    letter-spacing: 0.05em;
+  /* Floating pollen / dust */
+  .pollen { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+  .pollen i {
+    position: absolute; border-radius: 50%;
+    background: rgba(184,149,90,0.28);
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    from { transform: translateY(105vh) translateX(0); opacity: 0; }
+    15% { opacity: 0.6; }
+    to { transform: translateY(-5vh) translateX(30px); opacity: 0; }
   }
 
-  footer a {
-    color: var(--forest);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(31,58,46,0.25);
+  .sound-toast {
+    position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%);
+    z-index: 120; background: rgba(26,43,34,0.92); color: var(--moon);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.65rem 1rem; opacity: 0; pointer-events: none; transition: opacity 0.4s;
   }
-
-  /* glyph stroke default for cards */
-  .card-glyph svg {
-    stroke: var(--ink);
-    fill: none;
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .detail-glyph-float svg {
-    stroke: var(--ink);
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  /* —— CELESTIAL —— */
-  .celestial {
-    max-width: none;
-    background: linear-gradient(180deg, #0a1620 0%, #0E2433 55%, #132a3a 100%);
-    color: var(--moon);
-    padding: 5.5rem 1.5rem;
-  }
-  .celestial-inner { max-width: 960px; margin: 0 auto; }
-  .celestial .section-label { color: var(--gold); }
-  .celestial .section-title { color: var(--moon); }
-  .honesty {
-    border: 1px solid rgba(196,163,90,0.35);
-    background: rgba(0,0,0,0.25);
-    padding: 1.2rem 1.3rem;
-    margin: 1.25rem 0 2rem;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: rgba(247,247,242,0.82);
-  }
-  .honesty strong {
-    display: block;
-    font-size: 0.62rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.45rem;
-    font-weight: 500;
-  }
-  .cel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-  }
-  .cel-card {
-    border: 1px solid rgba(196,163,90,0.22);
-    background: rgba(255,255,255,0.03);
-    padding: 1.1rem 1.15rem;
-  }
-  .cel-card .n {
-    font-weight: 200;
-    font-size: 1.35rem;
-    color: var(--gold);
-  }
-  .cel-card .planet {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.15rem;
-    margin: 0.25rem 0 0.35rem;
-  }
-  .cel-card .word {
-    font-size: 0.62rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(196,163,90,0.85);
-    margin-bottom: 0.45rem;
-  }
-  .cel-card p {
-    font-size: 0.82rem;
-    color: rgba(247,247,242,0.72);
-    line-height: 1.45;
-  }
-  .card-sky-pill {
-    position: absolute;
-    left: 0.85rem;
-    bottom: 0.85rem;
-    background: rgba(14,36,51,0.78);
-    color: rgba(244,240,230,0.95);
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.32rem 0.5rem;
-    border: 1px solid rgba(196,163,90,0.35);
-    backdrop-filter: blur(4px);
-    max-width: calc(100% - 5.5rem);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .card-celestial {
-    font-size: 0.68rem;
-    color: var(--stone);
-    margin-top: 0.28rem;
-    padding: 0 0.1rem;
-    letter-spacing: 0.04em;
-    line-height: 1.35;
-  }
-
-  .card-kind {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-top: 0.2rem;
-    padding: 0 0.1rem;
-  }
-
+  .sound-toast.show { opacity: 1; }
 </style>
 </head>
-<body>
+<body class="is-locked">
 
-<!-- HERO -->
-<header class="hero" id="top">
-  <p class="hero-kicker">Feeling · Geometry · Daily Practice</p>
-  <h1>NUMBER MEDICINE</h1>
-  <p class="hero-sub">
-    Nine living forms. Each one is an <em>emotional anchor</em>, a <em>geometric map</em>,
-    and a <em>celestial symbol</em> — feeling, kinetic song, and sky-story together.
-  </p>
-  <div class="hero-line"></div>
-  <div class="hero-twin">
+<div class="pollen" id="pollen" aria-hidden="true"></div>
+
+<!-- CINEMA OPENING -->
+<div class="cinema" id="cinema">
+  <div class="cinema-stage">
+    <div class="cinema-num">One.</div>
+    <div class="cinema-word">Love</div>
+    <div class="cinema-tree" role="img" aria-label="A single tree at first light"></div>
+    <p class="cinema-line">Every number you see<br/>can remind you how you wish to live.</p>
+    <button class="cinema-enter" type="button" id="enterBtn">Enter</button>
+  </div>
+</div>
+
+<div class="layer-ui">
+  <div class="top-bar">
+    <a href="#ch-1">Language of Nine</a>
+    <div class="top-links">
+      <button type="button" id="soundBtn" aria-pressed="false">Sound off</button>
+      <a href="manifesto.html">Manifesto</a>
+      <a href="#memory">Today</a>
+      <a href="search.html">Search</a>
+      <a href="#eco">Ecosystem</a>
+      <a class="top-page" href="products/index.html">Products</a>
+      <a class="top-page" href="products/meditation_cards.html">Cards</a>
+      <a class="top-page" href="products/social_carousel.html">Carousel</a>
+    </div>
+  </div>
+
+  <nav class="exhibit-nav" id="exhibitNav" aria-label="The nine forms"></nav>
+  <div class="tree-progress" id="treeProgress" aria-hidden="true">🌱</div>
+  <aside class="today-banner" id="todayBanner" hidden>
+    <div class="tb-label">Today</div>
+    <div class="tb-n" id="tbN"></div>
+    <div class="tb-w" id="tbW"></div>
+    <div class="tb-m" id="tbM"></div>
+    <a href="#memory">Change</a>
+  </aside>
+
+  <main id="chapters"></main>
+
+  <section class="threshold" id="threshold">
     <div>
-      <strong>Medicine</strong>
-      <p>When a form appears, a feeling returns. Love. Sharing. Home. Soft mind.</p>
+      <blockquote>Silence. Nature. Memory.<br/>Three rooms of the same temple.</blockquote>
+      <p>Only now — the language has a name</p>
     </div>
-    <div>
-      <strong>Geometry</strong>
-      <p>The shape itself is instruction: stand, ground, open, cross, curve, spiral, give, loop, complete.</p>
+  </section>
+
+  <section class="memory" id="memory">
+    <div class="memory-inner">
+      <p class="label">Today's Number</p>
+      <h2>Which number found you today?</h2>
+      <p class="lead">No login. No backend. A daily mirror — not a prediction. Tomorrow the quiet may change.</p>
+      <div class="memory-grid" id="memoryGrid"></div>
+      <div class="memory-out" id="memoryOut">Choose when you are ready.</div>
+      <p class="memory-note">Saved only on this device</p>
     </div>
-    <div>
-      <strong>Celestial</strong>
-      <p>Eight mapped lights — then beyond: the Universe · the Unknown. Sky-story for reflection, not a false ninth planet.</p>
-    </div>
-  </div>
-  <div class="hero-jump" aria-label="Quick links">
-    <a href="#collection">Enter the Nine</a>
-    <a href="#celestial">Eight · then beyond</a>
-    <a href="#practice">Daily practice</a>
-    <a href="products/index.html">Products</a>
-    <a href="products/meditation_cards.html">Cards</a>
-    <a href="products/social_carousel.html">Carousel</a>
-  </div>
-</header>
+  </section>
 
-<!-- STICKY INTERACTIVE TABS -->
-<nav class="site-nav" id="siteNav" aria-label="Primary">
-  <div class="site-nav-inner">
-    <a class="site-nav-brand" href="#top">NUMBER<span>Medicine</span></a>
-    <div class="site-nav-tabs" id="siteNavTabs" role="tablist">
-      <a href="#philosophy" class="tab-link" data-section="philosophy" role="tab">Philosophy</a>
-      <a href="#map" class="tab-link" data-section="map" role="tab">The Map</a>
-      <a href="#collection" class="tab-link" data-section="collection" role="tab">The Nine</a>
-      <a href="#journey" class="tab-link" data-section="journey" role="tab">Kinetic Path</a>
-      <a href="#facts" class="tab-link" data-section="facts" role="tab">Twin Facts</a>
-      <a href="#celestial" class="tab-link" data-section="celestial" role="tab">Celestial</a>
-      <a href="#practice" class="tab-link" data-section="practice" role="tab">Practice</a>
-      <a href="#products" class="tab-link" data-section="products" role="tab">Applications</a>
-      <a href="#system" class="tab-link" data-section="system" role="tab">System</a>
-      <a href="products/index.html" class="tab-link external">Products</a>
-      <a href="products/meditation_cards.html" class="tab-link external">Cards</a>
-      <a href="products/social_carousel.html" class="tab-link external">Carousel</a>
-    </div>
-  </div>
-</nav>
-
-<!-- PHILOSOPHY -->
-<section class="philosophy" id="philosophy">
-  <div class="philosophy-inner">
-    <p class="section-label">Core Philosophy</p>
-    <h2 class="section-title">Stop only counting. Start reading the map.</h2>
-    <p>
-      This is not decoration. This is not superstition.
-      Every form from one to nine is a personal cue —
-      a quiet shift in state, and a physical instruction for the nervous system.
-    </p>
-    <p>
-      The artworks are seeds. The glyphs are paths.
-      Daily life is the garden where both grow.
-    </p>
-    <p class="quiet">Ancient yet futuristic · Minimal yet emotionally powerful</p>
-  </div>
-</section>
-
-<!-- MAP INTRO -->
-<section class="map-strip" id="map">
-  <div class="map-strip-inner">
-    <p class="section-label">The Geometric Teaching</p>
-    <h2 class="section-title">A kinetic map of reality</h2>
-    <p class="map-quote">
-      “Every number you see is a geometric map of your reality.
-      It’s not just a symbol. It’s a kinetic instruction —
-      a song that tells you exactly how to move your energy.”
-    </p>
-    <p class="map-note">
-      From pure initiation (the vertical of one) through the open loop of three,
-      the space–time cross of four, the inward coil of six, the receive–give–receive of seven,
-      the continuous loop of eight, to the inverted circuit of nine —
-      the shapes were never arbitrary. They are integration instructions.
-      Offered here as a mindfulness language you can feel with the body — not as absolute cosmic law.
-    </p>
-  </div>
-</section>
-
-<!-- COLLECTION -->
-<section id="collection">
-  <p class="section-label">The Collection</p>
-  <h2 class="section-title">Nine pillars · two teachings</h2>
-  <p class="section-body">
-    Each card holds nature-medicine, glyph-geometry, and a sky pill —
-    mapped eight (Sun…Neptune) or beyond (Universe · the Unknown).
-    Click any piece to open Feel · Form · Move · Sky together.
-  </p>
-  <div class="gallery-grid" id="gallery"></div>
-</section>
-
-<!-- DETAIL -->
-<section class="detail" id="detail">
-  <div class="detail-inner">
-    <div class="detail-visual">
-      <img id="detail-img" src="" alt="" />
-      <div class="detail-glyph-float" id="detail-glyph" aria-hidden="true"></div>
-      <div class="detail-sky-pill" id="detail-sky-pill"></div>
-    </div>
-    <div class="detail-copy">
-      <button class="close-detail" type="button" onclick="closeDetail()">← Back to collection</button>
-      <div class="detail-number" id="detail-number">1</div>
-      <div class="detail-word" id="detail-word">LOVE</div>
-      <div class="detail-name" id="detail-name">The First Seed</div>
-
-      <div class="detail-layers">
-        <div class="layer">
-          <h4>Emotional medicine</h4>
-          <p id="detail-phil"></p>
-        </div>
-        <div class="layer">
-          <h4>Geometric form</h4>
-          <p id="detail-geometry"></p>
-        </div>
-        <div class="layer">
-          <h4>Kinetic instruction</h4>
-          <p class="small" id="detail-kinetic"></p>
-        </div>
-        <div class="layer">
-          <h4>Parallel fact</h4>
-          <p class="small" id="detail-fact"></p>
-        </div>
-        <div class="layer">
-          <h4>Celestial symbol</h4>
-          <p class="small" id="detail-celestial"></p>
-        </div>
+  <section class="reveal" id="reveal">
+    <div class="reveal-inner">
+      <p class="label">The language, revealed</p>
+      <h2>Also known as Number Medicine</h2>
+      <p class="quote">A symbolic mindfulness language — not numerology, not superstition.</p>
+      <p>
+        Nine living forms. When one appears in ordinary life, it can become a cue
+        for how you wish to live — without claiming the digit has magic of its own.
+      </p>
+      <div class="layers">
+        <div><strong>Feel</strong> Emotional medicine — the quality that softens the mind</div>
+        <div><strong>Form</strong> Kinetic geometry — how the shape asks energy to move</div>
+        <div><strong>Move</strong> A five-second practice — tiny, embodied, real</div>
+        <div><strong>Sky</strong> Mapped eight (Sun…Neptune), then beyond: Universe · the Unknown</div>
       </div>
-
-      <p class="detail-story" id="detail-story"></p>
-      <div class="detail-meta">
-        <div><strong>Trigger</strong><span id="detail-trigger"></span></div>
-        <div><strong>Metaphor</strong><span id="detail-metaphor"></span></div>
-        <div><strong>Palette</strong><span id="detail-palette"></span></div>
-        <div><strong>Mood</strong><span id="detail-mood"></span></div>
+      <div class="honesty">
+        Forms 1–8 are the mapped eight. Form 9 is beyond the eight — never a planet.
+        There are eight official planets. The scientific “Planet Nine” hypothesis is separate and unobserved.
+      </div>
+      <div class="reveal-links">
+        <a href="manifesto.html">Manifesto</a>
+        <a href="search.html">Search</a>
+        <a href="system/CELESTIAL_MAP.md">Celestial map</a>
+        <a href="system/GEOMETRY_MAP.md">Geometry map</a>
+        <a href="system/DESIGN_BIBLE.md">Design bible</a>
+        <a href="system/IP_ROADMAP.md">IP roadmap</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- KINETIC JOURNEY -->
-<section class="journey" id="journey">
-  <div class="journey-inner">
-    <p class="section-label">From initiation to completion</p>
-    <h2 class="section-title">The path of the nine shapes</h2>
-    <p class="journey-lead">
-      One pure line begins. Nine pours completion into the ground.
-      Between them: integration, open desire, time’s cross, soft change,
-      the material spiral, human exchange, the endless loop, and the divine circuit.
-    </p>
-    <div class="journey-list" id="journeyList"></div>
-  </div>
-</section>
-
-<!-- FACTS -->
-<section id="facts">
-  <p class="section-label">Underneath the teachings</p>
-  <h2 class="section-title">Unique parallels of the nine</h2>
-  <p class="section-body">
-    Patterns that rhyme with both emotional medicine and geometric kinetic reading —
-    mathematics, language history, and the body of the glyph itself.
-  </p>
-  <div class="facts-grid">
-    <article class="fact-card">
-      <div class="label">Twin circuit</div>
-      <h3>Six and nine are one shape turned</h3>
-      <p>
-        In the modern Western glyph set, six and nine are rotational twins.
-        The teaching names the difference as direction: outside→in (material coil)
-        versus within→down (completion that grounds). Same circuit, opposite song.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Digital root</div>
-      <h3>Nine always returns to itself</h3>
-      <p>
-        Multiply nine by any whole count and reduce the digits: you meet nine again.
-        A clean mathematical echo of “completion that remains itself” —
-        parallel to the inverted circuit that finishes without vanishing.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Infinity rhyme</div>
-      <h3>Eight on its side never ends</h3>
-      <p>
-        Turn eight, and culture already reads infinity.
-        That is why the kinetic map says: fiercely guard what you place in the loop —
-        home patterns and collective circuits keep circulating.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Human hand</div>
-      <h3>Five is the living tool-count</h3>
-      <p>
-        Across cultures, five maps to the hand — the body’s first calculator.
-        The glyph often keeps four’s sharp angle and adds a curve:
-        structure that learns softness. Self without statue.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Monad</div>
-      <h3>One is the simplest possible mark</h3>
-      <p>
-        Philosophies of the monad treat one as indivisible origin.
-        The glyph agrees: a single vertical stroke — pure initiation —
-        before relation (two) and story (three) can exist.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Site law</div>
-      <h3>Only one through nine appear here</h3>
-      <p>
-        This site refuses the empty mark and every count beyond the nine.
-        No void-glyph. No ten-and-after. The map is the living set alone —
-        so the nervous system meets only the complete kinetic alphabet of form.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Open triad</div>
-      <h3>Three is rhythm that will not seal</h3>
-      <p>
-        Beginning–middle–end, waltz time, triad harmony —
-        three is the world’s favorite open story unit.
-        The glyph’s stacked curves face openness: desire that discerns without closing forever.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Connection stroke</div>
-      <h3>Seven is almost pure vector</h3>
-      <p>
-        Unlike containers (six, eight, nine), seven is a path: receive, drive, receive.
-        It cuts the closed material trap with the geometry of conversation and breath —
-        the exact process of human connection.
-      </p>
-    </article>
-    <article class="fact-card">
-      <div class="label">Cross of time</div>
-      <h3>Four builds the world you stand in</h3>
-      <p>
-        Seasons, directions, lunar phases — folk systems lean on four for stability.
-        The teaching’s lunar angle and solar line meet where you actually live:
-        sudden night-shifts and the steady year, braided as purpose.
-      </p>
-    </article>
-  </div>
-</section>
-
-
-<!-- CELESTIAL -->
-<section class="celestial" id="celestial">
-  <div class="celestial-inner">
-    <p class="section-label">Third layer · Symbolic sky</p>
-    <h2 class="section-title">Eight mapped · then beyond</h2>
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.15rem;line-height:1.6;color:rgba(247,247,242,0.88);max-width:36rem;margin-bottom:1rem;">
-      Forms one through eight hold the mapped sky chart.
-      Form nine steps past every planet list — into the Universe · the Unknown.
-    </p>
-    <div class="honesty">
-      <strong>Astronomy &amp; meaning honesty</strong>
-      There are <strong>eight</strong> officially recognized planets in our Solar System.
-      On this site, forms <strong>one through eight</strong> are the <strong>mapped eight</strong> (Sun · Mercury · Venus · Mars · Earth · Jupiter · Saturn · Neptune).
-      Form <strong>nine</strong> is <strong>beyond the eight</strong>: <strong>the Universe · the Unknown</strong>.
-      It is never called a planet. The scientific <em>Planet Nine</em> hypothesis is separate, unobserved, and not what we mean here.
-      Contemplative sky-language — not a catalog of invented worlds.
+  <section class="eco" id="eco">
+    <div class="eco-inner">
+      <p class="label">An operating system for attention</p>
+      <h2>Wherever life already is</h2>
+      <p class="lead">Phone. Pocket. Wall. Workshop. The language should not live only on a homepage.</p>
+      <ul class="eco-list">
+        <li><a href="manifesto.html"><span>Manifesto</span><em>Philosophy</em></a></li>
+        <li><a href="search.html"><span>Search the language</span><em>By quality</em></a></li>
+        <li><a href="#memory"><span>Today's Number</span><em>Daily</em></a></li>
+        <li><a href="products/index.html"><span>Ecosystem hub</span><em>Open</em></a></li>
+        <li><a href="products/meditation_cards.html"><span>Meditation cards</span><em>Open</em></a></li>
+        <li><a href="products/social_carousel.html"><span>Social carousel</span><em>Open</em></a></li>
+        <li><a href="products/wallpaper_specs.md"><span>Wallpapers</span><em>Specs</em></a></li>
+        <li><a href="system/IP_ROADMAP.md"><span>IP Roadmap</span><em>Phases</em></a></li>
+      </ul>
     </div>
-    <div class="cel-grid" id="celGrid"></div>
-    <p style="margin-top:1.75rem;font-size:0.85rem;color:rgba(247,247,242,0.55);">
-      Full table &amp; enrichment: <a href="system/CELESTIAL_MAP.md" style="color:var(--gold);">system/CELESTIAL_MAP.md</a>
+  </section>
+
+  <footer class="end">
+    <p>The next number you notice…<br/>pause.<br/>Remember.</p>
+    <div class="remember">Language of Nine</div>
+    <p style="margin-top:1.5rem;font-family:IBM Plex Mono,monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;">
+      <a href="manifesto.html" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(122,117,108,0.4);">Manifesto</a>
+      &nbsp;·&nbsp;
+      <a href="search.html" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(122,117,108,0.4);">Search</a>
+      &nbsp;·&nbsp;
+      <a href="system/IP_ROADMAP.md" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(122,117,108,0.4);">IP Roadmap</a>
     </p>
-  </div>
-</section>
+  </footer>
+</div>
 
-<!-- PRACTICE -->
-<section class="practice" id="practice">
-  <div class="practice-inner">
-    <p class="section-label">How it lives</p>
-    <h2 class="section-title">The daily practice</h2>
-    <p class="practice-lead">
-      When a form appears — clock, door, page, receipt — run all four:
-      <strong>Feel</strong> the medicine · <strong>Form</strong> the geometry · <strong>Move</strong> the body · <strong>Sky</strong> (mapped eight, or beyond: Universe · the Unknown).
-    </p>
-    <div class="practice-grid" id="practiceGrid"></div>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-sheet">
+    <button class="drawer-close" type="button" id="drawerClose">Close</button>
+    <div class="ch-num" id="dNum">1</div>
+    <div class="ch-word" id="dWord">Love</div>
+    <div class="d-layer"><label>Feel</label><p id="dFeel"></p></div>
+    <div class="d-layer"><label>Form</label><p class="plain" id="dForm"></p></div>
+    <div class="d-layer"><label>Move · five seconds</label><p id="dMove"></p></div>
+    <div class="d-layer"><label>Sky</label><p class="plain" id="dSky"></p></div>
+    <div class="d-layer"><label>Atmosphere</label><p class="plain" id="dAtmo"></p></div>
   </div>
-</section>
+</div>
 
-<!-- PRODUCTS -->
-<section id="products">
-  <p class="section-label">Applications</p>
-  <h2 class="section-title">Where the language lives</h2>
-  <p class="section-body">
-    Museum prints, pocket cards, walls, fabric, screens —
-    so feeling, geometry, and sky (eight · then beyond) can enter ordinary life.
-  </p>
-  <div class="products-grid">
-    <div class="product-chip">Meditation Cards</div>
-    <div class="product-chip">Museum Posters</div>
-    <div class="product-chip">Canvas Prints</div>
-    <div class="product-chip">Phone Wallpapers</div>
-    <div class="product-chip">Desktop Wallpapers</div>
-    <div class="product-chip">Journal Covers</div>
-    <div class="product-chip">T-Shirts &amp; Hoodies</div>
-    <div class="product-chip">Book Covers</div>
-    <div class="product-chip">Sticker Packs</div>
-    <div class="product-chip">Metal Wall Art</div>
-    <div class="product-chip">Wooden Engravings</div>
-    <div class="product-chip">Coffee Mugs</div>
-    <div class="product-chip">Phone Cases</div>
-    <div class="product-chip">Notebook Covers</div>
-    <div class="product-chip">Social Carousels</div>
-    <div class="product-chip">Website Heroes</div>
-    <div class="product-chip">Tarot-inspired Cards</div>
-    <div class="product-chip">Brand Campaigns</div>
-  </div>
-  <div class="product-showcase">
-    <img src="products/poster_system_grid.jpg" alt="Nine framed prints on a gallery wall" />
-    <p class="product-caption">Exhibition concept — the nine as a complete wall language</p>
-  </div>
-  <p class="section-body" style="margin-top:2rem">
-    Product previews (Feel · Form · Move · Sky):
-    <a href="products/index.html" style="color:var(--forest);">Products hub</a>
-    ·
-    <a href="products/meditation_cards.html" style="color:var(--forest);">Meditation cards</a>
-    ·
-    <a href="products/social_carousel.html" style="color:var(--forest);">Social carousel</a>
-    ·
-    <a href="products/NEXT_SUGGESTIONS.html" style="color:var(--forest);">What to build next</a>
-  </p>
-</section>
-
-<!-- SYSTEM -->
-<section id="system">
-  <p class="section-label">Design system</p>
-  <h2 class="section-title">Color · Type · Laws</h2>
-  <p class="section-body">
-    Forest, ocean, earth, ivory, gold. Serif for the word.
-    Light architectural sans for the living digit. Negative space is sacred.
-    Glyph line-weight stays thin — calligraphy of energy, not a stamp.
-  </p>
-  <div class="swatches">
-    <div class="swatch"><div class="swatch-chip" style="background:#1F3A2E"></div><span>Forest</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#0E2433"></div><span>Ocean</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#5C4033"></div><span>Earth</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#F4F0E6;border:1px solid #ddd"></div><span>Ivory</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#8A8680"></div><span>Stone</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#C4A35A"></div><span>Gold</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#B87333"></div><span>Copper</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#6B6E3F"></div><span>Olive</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#F7F7F2;border:1px solid #ddd"></div><span>Moon</span></div>
-    <div class="swatch"><div class="swatch-chip" style="background:#1A1A18"></div><span>Ink</span></div>
-  </div>
-
-  <div class="law-box">
-    <strong>Geometric site law</strong>
-    <p>
-      Only the living digits one through nine appear as numerals on this site.
-      No empty mark. No counts beyond the nine. Six and nine remain as the twin circuit —
-      direction of spiral is the lesson, not an extra alphabet.
-      Filenames may use padded stems for machines; the human eye meets only the nine.
-    </p>
-  </div>
-
-  <p class="section-body" style="margin-top:2.25rem">
-    Deep files:
-    <em>system/DESIGN_BIBLE.md</em> ·
-    <em>system/GEOMETRY_MAP.md</em> ·
-    <em>system/CELESTIAL_MAP.md</em> ·
-    <em>artworks collection brief</em>
-  </p>
-</section>
-
-<footer>
-  <div class="mark">NUMBER MEDICINE</div>
-  <p class="question">What does this form ask me to feel — and how does it ask me to move?</p>
-  <p>Designed to be inherited · Feel · Form · Move · Sky · Eight then beyond</p>
-  <p style="margin-top:1rem">
-    <a href="system/GEOMETRY_MAP.md">Read the full geometric map</a>
-    ·
-    <a href="system/CELESTIAL_MAP.md">Read the celestial map</a>
-  </p>
-</footer>
+<div class="sound-toast" id="soundToast">Ambient nature · still silent by design</div>
 
 <script>
-/* Glyph paths: pure stroke geometry for one–nine */
+
+/* Site base path: leave empty for root domain or local server.
+   For GitHub project pages set to '/REPO_NAME/' e.g. '/number-medicine/' */
+window.SITE_BASE = window.SITE_BASE || '';
+function withBase(path) {
+  if (!path || path.startsWith('#') || path.startsWith('http') || path.startsWith('data:')) return path;
+  if (path.startsWith('/')) path = path.slice(1);
+  return (window.SITE_BASE || '') + path;
+}
+// Rewrite product links if SITE_BASE is set
+document.querySelectorAll('a[href^="products/"]').forEach(function (a) {
+  a.setAttribute('href', withBase(a.getAttribute('href')));
+});
+
 const glyphs = {
-  "1": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M20 8 V56"/></svg>',
-  "2": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M8 18 C8 8, 32 8, 32 20 C32 32, 8 40, 8 52 H32"/></svg>',
-  "3": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M10 14 C10 6, 30 6, 30 16 C30 24, 18 28, 18 28 C18 28, 32 30, 32 42 C32 54, 10 56, 10 48"/></svg>',
-  "4": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M28 56 V12 L8 40 H34"/></svg>',
-  "5": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M30 10 H12 V30 C12 30, 32 28, 32 44 C32 56, 10 58, 10 46"/></svg>',
-  "6": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M28 12 C16 12, 10 24, 10 36 C10 50, 20 58, 28 52 C36 46, 36 34, 28 30 C20 26, 12 34, 14 42"/></svg>',
-  "7": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M8 12 H32 L14 56"/></svg>',
-  "8": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M20 32 C10 32, 10 12, 20 12 C30 12, 30 32, 20 32 C10 32, 10 54, 20 54 C30 54, 30 32, 20 32"/></svg>',
-  "9": '<svg viewBox="0 0 40 64" aria-hidden="true"><path d="M12 52 C24 52, 30 40, 30 28 C30 14, 20 6, 12 12 C4 18, 4 30, 12 34 C20 38, 28 30, 26 22"/></svg>'
+  "1": '<svg viewBox="0 0 40 64"><path d="M20 8 V56"/></svg>',
+  "2": '<svg viewBox="0 0 40 64"><path d="M8 18 C8 8, 32 8, 32 20 C32 32, 8 40, 8 52 H32"/></svg>',
+  "3": '<svg viewBox="0 0 40 64"><path d="M10 14 C10 6, 30 6, 30 16 C30 24, 18 28, 18 28 C18 28, 32 30, 32 42 C32 54, 10 56, 10 48"/></svg>',
+  "4": '<svg viewBox="0 0 40 64"><path d="M28 56 V12 L8 40 H34"/></svg>',
+  "5": '<svg viewBox="0 0 40 64"><path d="M30 10 H12 V30 C12 30, 32 28, 32 44 C32 56, 10 58, 10 46"/></svg>',
+  "6": '<svg viewBox="0 0 40 64"><path d="M28 12 C16 12, 10 24, 10 36 C10 50, 20 58, 28 52 C36 46, 36 34, 28 30 C20 26, 12 34, 14 42"/></svg>',
+  "7": '<svg viewBox="0 0 40 64"><path d="M8 12 H32 L14 56"/></svg>',
+  "8": '<svg viewBox="0 0 40 64"><path d="M20 32 C10 32, 10 12, 20 12 C30 12, 30 32, 20 32 C10 32, 10 54, 20 54 C30 54, 30 32, 20 32"/></svg>',
+  "9": '<svg viewBox="0 0 40 64"><path d="M12 52 C24 52, 30 40, 30 28 C30 14, 20 6, 12 12 C4 18, 4 30, 12 34 C20 38, 28 30, 26 22"/></svg>'
 };
 
-const pieces = [
+const nine = [
   {
-    n: "1",
-    word: "LOVE",
-    title: "The First Seed",
+    n: "1", word: "LOVE", title: "The First Seed",
     file: "artworks/01_LOVE.jpg",
-    trigger: "Unconditional presence · Quiet beginning",
-    phil: "Love is not earned. It is the ground under every step. One seed holds a forest. Begin here.",
-    geometry: "A single straight vertical line. Pure initiation. Source energy stabilizing as it enters the physical plane.",
-    kinetic: "Stand as the line. Stabilize. Energy cannot stay a point — let it begin to integrate.",
-    fact: "The monad: one as indivisible origin. The glyph is often the simplest human mark — a single upright stroke.",
-    planet: "Sun",
-    planetSymbol: "☀",
-    planetNote: "Source of the system. Everything depends on this fire — as love is source emotion.",
-    element: "Fire",
-    tree: "Oak",
-    animal: "Eagle",
-    story: "A single young tree in open field at first light. Soft fog. Pale sunrise — inevitable, not dramatic. Only this living form and the vastness that allows it.",
-    palette: "Ivory · Soft black · Sunset gold · Forest",
-    metaphor: "Single tree · Sunrise · Seed",
-    mood: "Quiet beginning · Warmth without noise",
-    practiceFeel: "Hand on chest for one breath. Love begins here.",
-    practiceMove: "Trace a vertical line in the air. Stand tall once.",
-    journey: "Pure initiation. The stabilization of source into form."
+    poem: "The forest remembers—even after winter. Love does too.",
+    feel: "Unconditional presence. The quiet beginning.",
+    form: "A single vertical line. Pure initiation.",
+    move: "Hand on chest. One breath. Smile at someone—or yourself.",
+    micro: "Smile at someone.",
+    sky: "☀ Sun · mapped eight",
+    atmo: "Morning forest · spring · oak · robin · soft piano · first light · rain-washed air",
+    reflect: "Today, maybe begin again. Source is already here.",
+    env: "morning forest"
   },
   {
-    n: "2",
-    word: "SHARING",
-    title: "Two Become a Current",
+    n: "2", word: "SHARING", title: "Two Become a Current",
     file: "artworks/02_SHARING.jpg",
-    trigger: "Generosity · Connection · Friendship",
-    phil: "What you give does not leave you. It multiplies between hands. Friendship is a form of weather.",
-    geometry: "The upper curve rounds infinite possibility; the motion then grounds into a line of reality. Integration.",
-    kinetic: "Soften and open at the top — then ground the gift into the real.",
-    fact: "Two is the first true pair in language and life — the birth of relation, not mere quantity.",
-    planet: "Mercury",
-    planetSymbol: "☿",
-    planetNote: "The messenger. Sharing requires communication and exchange.",
-    element: "Air",
-    tree: "Bamboo",
-    animal: "Dove",
-    story: "Two trees side by side. Canopies nearly touch; roots intertwine below. A thin gold stream between. Two birds face the same direction.",
-    palette: "Forest · Warm earth · Ivory · Copper",
-    metaphor: "Two trees · Roots · Water",
-    mood: "Warm companionship · Quiet generosity",
-    practiceFeel: "Offer one small thing without being asked.",
-    practiceMove: "Draw the curve-to-ground of two. Give, then root.",
-    journey: "Infinite possibility curves into grounded relation."
+    poem: "What leaves your hands does not leave the world.",
+    feel: "Generosity. Connection. Friendship as weather.",
+    form: "Curve into ground. Possibility becomes relation.",
+    move: "Give one small unasked thing. Or thank someone by name.",
+    micro: "Give thanks out loud.",
+    sky: "☿ Mercury · mapped eight",
+    atmo: "River bank · bamboo · dove · running water · soft strings · shared air",
+    reflect: "Today, maybe remember generosity.",
+    env: "river"
   },
   {
-    n: "3",
-    word: "DESIRE",
-    title: "The Mountain That Calls",
+    n: "3", word: "DESIRE", title: "The Mountain That Calls",
     file: "artworks/03_DESIRE.jpg",
-    trigger: "Healthy longing · Ambition · Curiosity",
-    phil: "Desire is a seed looking for light. Not greed — direction. Meet yourself at the height.",
-    geometry: "An open loop. Highs and lows visible; one side open. Discernment acts while reception stays possible.",
-    kinetic: "Feel peak and valley. Choose a step — keep the loop open to depth.",
-    fact: "Three is the open story unit worldwide: beginning–middle–end, triad, waltz. The glyph refuses to seal shut.",
-    planet: "Venus",
-    planetSymbol: "♀",
-    planetNote: "Attraction, beauty, longing — desire as a pull toward what is lovely.",
-    element: "Water",
-    tree: "Cherry",
-    animal: "Swan",
-    story: "Three seeds on dark soil; one shoot leans toward a distant mountain under sparse stars. A faint path. Gold on the mountain’s shoulder.",
-    palette: "Deep ocean · Soft black · Gold · Forest",
-    metaphor: "Seeds · Mountain · Path · Stars",
-    mood: "Calm ambition · Forward lean",
-    practiceFeel: "Name one honest longing without shame.",
-    practiceMove: "Trace the open three. Breathe high, low, open.",
-    journey: "Open loop — discernment with infinite depth still welcome."
+    poem: "Longing is not a flaw. It is a seed leaning toward light.",
+    feel: "Healthy longing. Ambition without violence.",
+    form: "Open loop. Highs and lows. Stay open while you choose.",
+    move: "Name one honest longing. Take only one step toward it.",
+    micro: "Name one true want.",
+    sky: "♀ Venus · mapped eight",
+    atmo: "Mountain sunrise · cherry · swan · open water · minor piano · horizon gold",
+    reflect: "Today, maybe let desire be clean—not greedy.",
+    env: "mountain"
   },
   {
-    n: "4",
-    word: "PURPOSE",
-    title: "The Path Underfoot",
+    n: "4", word: "PURPOSE", title: "The Path Underfoot",
     file: "artworks/04_PURPOSE.jpg",
-    trigger: "Direction · Meaning · Discipline",
-    phil: "Purpose is not a shout from the peak. Walk. The path appears under the feet that move.",
-    geometry: "Two intersecting lines — construction of time. Lunar angle: sudden night-shifts. Solar line: steady year. You live at the cross.",
-    kinetic: "Honor the sharp turn and the long consistency. Stand in the intersection.",
-    fact: "Four maps stable world-structure in folk systems: seasons, directions, lunar phases. Angle plus stem — a form you can inhabit.",
-    planet: "Mars",
-    planetSymbol: "♂",
-    planetNote: "Action, courage, direction. Purpose requires movement.",
-    element: "Earth",
-    tree: "Pine",
-    animal: "Wolf",
-    story: "A narrow trail through tall grass. Wooden bridge. Footprints. One steady star in dusk. Invitation, not command.",
-    palette: "Warm earth · Olive · Stone · Ivory · Gold",
-    metaphor: "Path · Bridge · Footprints · Star",
-    mood: "Quiet direction · First-person invitation",
-    practiceFeel: "Take only the next small step.",
-    practiceMove: "Draw the cross of four. Name one sudden shift and one steady habit.",
-    journey: "Space–time cross — lunar shock meets solar rhythm."
+    poem: "Purpose is not a shout from the peak. It is the next footprint.",
+    feel: "Direction without force.",
+    form: "Space–time cross. Sudden turn meets steady year.",
+    move: "Take only the next small step. Notice you moved.",
+    micro: "Take one small step.",
+    sky: "♂ Mars · mapped eight",
+    atmo: "Ancient path · pine · wolf · dry grass · low drum · one steady star",
+    reflect: "Today, maybe walk—without conquering.",
+    env: "path"
   },
   {
-    n: "5",
-    word: "SELF",
-    title: "The Quiet Rings",
+    n: "5", word: "SELF", title: "The Quiet Rings",
     file: "artworks/05_SELF.jpg",
-    trigger: "Humanity · Growth · Identity",
-    phil: "You are not a finished statue. You are rings of weather survived and light received.",
-    geometry: "Holds the sharp angle of four, then curves at the base. Rapid change without rigid judgment — righteousness softens.",
-    kinetic: "Keep your edge. Drop the verdict. Bend through change.",
-    fact: "Five is the hand — the human tool-count. First common glyph to marry hard angle with a living lower curve.",
-    planet: "Earth",
-    planetSymbol: "🌍",
-    planetNote: "Where human life stands. The natural symbol for self.",
-    element: "Spirit",
-    tree: "Banyan",
-    animal: "Human",
-    story: "Tree-trunk cross-section fills the frame. Center: soft human silhouette of light only. A hand on outer bark.",
-    palette: "Warm earth · Soft black · Ivory · Copper",
-    metaphor: "Tree rings · Silhouette · Hand",
-    mood: "Intimate · Scientific poetry",
-    practiceFeel: "Ask: which ring am I growing in this season?",
-    practiceMove: "Trace five’s angle-into-curve. Unclench one judgment.",
-    journey: "The shift — structure that learns to curve."
+    poem: "You are not a finished statue. You are weather survived and light received.",
+    feel: "Identity as growth.",
+    form: "Angle that learns to curve.",
+    move: "Straighten posture. Unclench one judgment about yourself.",
+    micro: "Straighten your posture.",
+    sky: "🌍 Earth · mapped eight",
+    atmo: "Mirror lake · banyan · wood grain · soft cello · midday quiet",
+    reflect: "Today, maybe soften righteousness—keep your edge.",
+    env: "lake"
   },
   {
-    n: "6",
-    word: "JOY",
-    title: "Golden Field, Quiet Heart",
+    n: "6", word: "JOY", title: "Golden Field, Quiet Heart",
     file: "artworks/06_JOY.jpg",
-    trigger: "Gratitude · Contentment · Also: release grip",
-    phil: "Joy is sunlight on a field you almost walked past. Notice the warmth — then loosen the coil so joy does not become a trap.",
-    geometry: "Fibonacci-like spiral pulling outside → in, toward the material center. The flesh circuit: sweet, tight, hypnotic.",
-    kinetic: "Enjoy the gold. Then widen the spiral. Gratitude without grip.",
-    fact: "Six and nine are rotational twins. Six’s loop rides low — earth-weighted, inward song.",
-    planet: "Jupiter",
-    planetSymbol: "♃",
-    planetNote: "Expansion, generosity, abundance — joy that can grow too tight if gripped.",
-    element: "Sky",
-    tree: "Cedar",
-    animal: "Elephant",
-    story: "Vast golden field at peak hour. One elegant butterfly. Soft haze. The image is an exhale — beauty that must stay free.",
-    palette: "Sunset gold · Olive · Ivory · Warm earth",
-    metaphor: "Golden field · Butterfly · Warm light",
-    mood: "Contentment · Soft radiance · Alert softness",
-    practiceFeel: "Notice one quiet good thing.",
-    practiceMove: "Draw the inward six, then reverse the spiral once outward.",
-    journey: "Material coil — pleasure that must not imprison."
+    poem: "Joy is sunlight on a field you almost walked past.",
+    feel: "Gratitude without performance. Stay free.",
+    form: "Inward spiral. Notice—then loosen.",
+    move: "One deep breath. Notice one quiet good thing.",
+    micro: "One deep breath.",
+    sky: "♃ Jupiter · mapped eight",
+    atmo: "Golden meadow · cedar · butterfly · warm wind · distant laughter · soft bells",
+    reflect: "Today, maybe enjoy—without trapping the gold.",
+    env: "meadow"
   },
   {
-    n: "7",
-    word: "BALANCE",
-    title: "Lake Holding Mountain",
+    n: "7", word: "BALANCE", title: "Lake Holding Mountain",
     file: "artworks/07_BALANCE.jpg",
-    trigger: "Light & shadow · Action & rest",
-    phil: "Balance is the lake that holds the mountain without becoming it. You need both edges of yourself.",
-    geometry: "Left to right: receivership, diagonal drive into giving, ground back into receiving. Exact geometry of human connection. Cuts the trap of six.",
-    kinetic: "In · out · in. Breath, friendship, exchange — three beats of seven.",
-    fact: "Seven is nearly pure vector — a path, not a sealed container. Culture often treats it as complete-but-not-final.",
-    planet: "Saturn",
-    planetSymbol: "♄",
-    planetNote: "Limits and structure teach balance — freedom held by responsibility.",
-    element: "Stone",
-    tree: "Olive",
-    animal: "Owl",
-    story: "Still mountain lake at blue hour. Perfect reflection. Moon and twin in water. Thin copper residual light on the horizon.",
-    palette: "Deep ocean · Soft black · Stone · Moon · Copper",
-    metaphor: "Mountain · Lake · Moon · Reflection",
-    mood: "Equilibrium · Cool calm",
-    practiceFeel: "Find the opposite edge of your current state.",
-    practiceMove: "Trace seven: receive line, give diagonal, receive again.",
-    journey: "Receive → give → receive. Connection that frees."
+    poem: "The lake holds the mountain without becoming the mountain.",
+    feel: "Both edges. Action and rest.",
+    form: "Receive → give → receive.",
+    move: "Ask: what am I neglecting? Give that edge one minute.",
+    micro: "Ask what you are neglecting.",
+    sky: "♄ Saturn · mapped eight",
+    atmo: "Sunset mountains · olive · owl · still water · wind chime · moon twin",
+    reflect: "Today, maybe hold both edges of yourself.",
+    env: "sunset"
   },
   {
-    n: "8",
-    word: "HOME",
-    title: "Where the Light Waits",
+    n: "8", word: "HOME", title: "Where the Light Waits",
     file: "artworks/08_HOME.jpg",
-    trigger: "Comfort · Belonging · Sacred guard",
-    phil: "Home is the place that knows your weight in the chair. Whatever you set in this loop keeps running — choose with care.",
-    geometry: "Continuous double loop. Energy expands collectively. The construct does not stop; guard what you place inside.",
-    kinetic: "Name one pattern you call home. Keep it if it heals; redesign it if it harms.",
-    fact: "Eight sideways is the common infinity mark — the body already reads “does not end.”",
-    planet: "Neptune",
-    planetSymbol: "♆",
-    planetNote: "Ocean depth and soul-belonging. Home as the dream that must be guarded.",
-    element: "Ocean",
-    tree: "Willow",
-    animal: "Whale",
-    story: "Wooden cabin at autumn forest edge. One window glows gold. Soft smoke. Empty chair, folded blanket. Cool dusk; warm interior.",
-    palette: "Warm earth · Sunset gold · Forest · Soft black",
-    metaphor: "Cabin · Window light · Chair · Nest",
-    mood: "Safety · Soft arrival · Responsibility",
-    practiceFeel: "Put the day down at the threshold.",
-    practiceMove: "Trace the double loop. Ask: what am I circulating?",
-    journey: "Endless loop — belonging as power that must be guarded."
+    poem: "Home is the place that knows your weight in the chair.",
+    feel: "Belonging. Guard what keeps circulating.",
+    form: "Continuous double loop.",
+    move: "Put the day down. Sit once without a screen.",
+    micro: "Put the day down.",
+    sky: "♆ Neptune · mapped eight",
+    atmo: "Cabin dusk · willow · whale · warm window · wool · soft smoke",
+    reflect: "Today, maybe choose what you allow to keep circulating.",
+    env: "cabin"
   },
   {
-    n: "9",
-    word: "THE UNIVERSE",
-    title: "The Same Breath",
+    n: "9", word: "THE UNIVERSE", title: "The Same Breath",
     file: "artworks/09_UNIVERSE.jpg",
-    trigger: "Infinity · Nature · Completion as gift",
-    phil: "You are not small. You are made of the same night. Completion pours from within into the ground.",
-    geometry: "Six inverted — the divine circuit. Not outside→in, but within→down into earth. Absolute process of completion.",
-    kinetic: "Start from inner fullness. Deliver downward into life. End as gift, not hoard.",
-    fact: "Nine’s digital root always returns to nine — mathematical rhyme of completion that remains itself. Loop rides high: sky-weighted twin of six.",
-    planet: "Universe · the Unknown",
-    planetSymbol: "✦",
-    planetNote: "Beyond the eight. Not a planet. The Universe is the whole; the Unknown is what no map finishes. Contemplative language, not a sky object.",
-    element: "Cosmos",
-    tree: "World Tree",
-    animal: "Phoenix",
-    story: "Night ocean under elegant stars. Whale’s curve echoes distant mountains. Subtle spiral in the sky. Vast and intimate at once.",
-    palette: "Deep ocean · Soft black · Moon white · Forest",
-    metaphor: "Whale · Stars · Mountains · Ocean · Spiral",
-    mood: "Vast intimacy · Quiet awe",
-    practiceFeel: "Remember you are made of the same night.",
-    practiceMove: "Trace nine from inner loop down to ground. Offer one completed thing.",
-    journey: "Within → earth. Completion as the final code."
+    poem: "You are not small. You are made of the same night.",
+    feel: "Completion as gift. Awe without fear.",
+    form: "Within → ground. Beyond every catalog.",
+    move: "Look up. Offer one completed thing—or one quiet surrender.",
+    micro: "Look up.",
+    sky: "✦ Beyond · Universe · the Unknown",
+    atmo: "Deep night · world tree · phoenix · ocean · distant stars · silence",
+    reflect: "Today, maybe remember: beyond every map, you still belong.",
+    env: "stars"
   }
 ];
 
-const gallery = document.getElementById('gallery');
-const detail = document.getElementById('detail');
-const collection = document.getElementById('collection');
-const journeyList = document.getElementById('journeyList');
-const practiceGrid = document.getElementById('practiceGrid');
+const treeStages = ["🌱", "🌿", "🌿", "🌳", "🌳", "🌲", "🌲", "🌌", "✦"];
 
-pieces.forEach((p, i) => {
-  const el = document.createElement('article');
-  el.className = 'card';
-  el.tabIndex = 0;
-  el.setAttribute('role', 'button');
-  el.setAttribute('aria-label', 'Open ' + p.n + ' ' + p.word);
-  const skyPill = (p.n === '9')
-    ? (p.planetSymbol + ' Beyond')
-    : (p.planetSymbol + ' ' + p.planet);
-  const skyKind = (p.n === '9') ? 'Beyond the eight' : 'Mapped eight';
-  const skyLine = (p.n === '9')
-    ? (p.planetSymbol + ' ' + p.planet)
-    : (p.planetSymbol + ' ' + p.planet + ' · mapped eight');
-  el.innerHTML =
-    '<div class="card-image-wrap">' +
-      '<img src="' + p.file + '" alt="' + p.n + ' — ' + p.word + ': ' + p.title + '" loading="lazy" />' +
-      '<div class="card-glyph">' + glyphs[p.n] + '</div>' +
-      '<div class="card-sky-pill">' + skyPill + '</div>' +
-    '</div>' +
-    '<div class="card-meta">' +
-      '<span class="card-number">' + p.n + '</span>' +
-      '<span class="card-word">' + p.word + '</span>' +
-    '</div>' +
-    '<div class="card-title">' + p.title + '</div>' +
-    '<div class="card-kind">' + skyKind + '</div>' +
-    '<div class="card-kinetic">' + p.kinetic.split('.')[0] + '</div>' +
-    '<div class="card-celestial">' + skyLine + '</div>' +
-    '<p class="card-philosophy">' + p.phil.split('.').slice(0, 2).join('.') + '.</p>';
-  el.addEventListener('click', () => openDetail(i));
-  el.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(i); }
-  });
-  gallery.appendChild(el);
-
-  // journey row
-  const row = document.createElement('div');
-  row.className = 'journey-row';
-  const jSky = (p.n === '9')
-    ? (p.planetSymbol + ' Beyond · ' + p.planet)
-    : (p.planetSymbol + ' ' + p.planet + ' · mapped eight');
-  row.innerHTML =
-    '<div class="journey-glyph">' + glyphs[p.n] + '</div>' +
-    '<div>' +
-      '<div class="tag">' + p.n + ' · ' + p.word + ' · ' + jSky + '</div>' +
-      '<h3>' + p.title + '</h3>' +
-      '<p>' + p.journey + ' ' + p.geometry + '</p>' +
-    '</div>';
-  journeyList.appendChild(row);
-
-  // practice
-  const pr = document.createElement('div');
-  pr.className = 'practice-item';
-  const skyLine = (p.n === '9')
-    ? (p.planetSymbol + ' Beyond · ' + p.planet)
-    : (p.planetSymbol + ' ' + p.planet + ' · mapped eight');
-  pr.innerHTML =
-    '<div class="n">' + p.n + '</div>' +
-    '<div class="w">' + p.word + '</div>' +
-    '<p>' + p.practiceFeel + '</p>' +
-    '<div class="move">Move: ' + p.practiceMove + '</div>' +
-    '<div class="move" style="opacity:0.75;margin-top:0.35rem">Sky: ' + skyLine + '</div>';
-  practiceGrid.appendChild(pr);
-});
-
-const celGrid = document.getElementById('celGrid');
-if (celGrid) {
-  pieces.forEach(p => {
-    const c = document.createElement('article');
-    c.className = 'cel-card';
-    const kind = (p.n === '9') ? 'Beyond the eight' : 'Mapped eight';
-    c.innerHTML =
-      '<div class="n">' + p.n + '</div>' +
-      '<div class="planet">' + p.planetSymbol + ' ' + p.planet + '</div>' +
-      '<div class="word">' + p.word + ' · ' + kind + '</div>' +
-      '<p>' + p.planetNote + '</p>';
-    celGrid.appendChild(c);
-  });
-}
-
-function openDetail(i) {
-  const p = pieces[i];
-  document.getElementById('detail-img').src = p.file;
-  document.getElementById('detail-img').alt = p.n + ' ' + p.word;
-  document.getElementById('detail-glyph').innerHTML = glyphs[p.n];
-  const pillEl = document.getElementById('detail-sky-pill');
-  if (pillEl) {
-    pillEl.textContent = (p.n === '9')
-      ? (p.planetSymbol + ' Beyond · Universe · the Unknown')
-      : (p.planetSymbol + ' ' + p.planet);
-  }
-  document.getElementById('detail-number').textContent = p.n;
-  document.getElementById('detail-word').textContent = p.word;
-  document.getElementById('detail-name').textContent = p.title;
-  document.getElementById('detail-phil').textContent = p.phil;
-  document.getElementById('detail-geometry').textContent = p.geometry;
-  document.getElementById('detail-kinetic').textContent = p.kinetic;
-  document.getElementById('detail-fact').textContent = p.fact;
-  const skyKind = (p.n === '9') ? 'Beyond the eight' : 'Mapped eight';
-  document.getElementById('detail-celestial').textContent = p.planetSymbol + ' ' + p.planet + ' · ' + skyKind + ' — ' + p.planetNote + ' · Element: ' + p.element + ' · Tree: ' + p.tree + ' · Animal: ' + p.animal;
-  document.getElementById('detail-story').textContent = p.story;
-  document.getElementById('detail-trigger').textContent = p.trigger;
-  document.getElementById('detail-metaphor').textContent = p.metaphor;
-  document.getElementById('detail-palette').textContent = p.palette;
-  document.getElementById('detail-mood').textContent = p.mood;
-  detail.classList.add('active');
-  collection.style.opacity = '0.35';
-  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function closeDetail() {
-  detail.classList.remove('active');
-  collection.style.opacity = '1';
-  collection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-
-/* —— Interactive sticky tabs —— */
+/* pollen */
 (function () {
-  const tabs = Array.from(document.querySelectorAll('#siteNavTabs a.tab-link[data-section]'));
-  const sectionIds = tabs.map(a => a.getAttribute('data-section'));
-  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-
-  function setActive(id) {
-    tabs.forEach(a => {
-      const on = a.getAttribute('data-section') === id;
-      a.classList.toggle('active', on);
-      a.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
+  const box = document.getElementById('pollen');
+  for (let i = 0; i < 16; i++) {
+    const el = document.createElement('i');
+    const s = 1.5 + Math.random() * 2.5;
+    el.style.width = el.style.height = s + 'px';
+    el.style.left = Math.random() * 100 + '%';
+    el.style.animationDuration = (14 + Math.random() * 20) + 's';
+    el.style.animationDelay = (Math.random() * 14) + 's';
+    box.appendChild(el);
   }
-
-  // Smooth scroll with sticky offset handled via scroll-margin-top
-  tabs.forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('data-section');
-      const el = document.getElementById(id);
-      if (!el) return;
-      e.preventDefault();
-      // close detail if open so destination is visible
-      if (typeof closeDetail === 'function') {
-        try { closeDetail(); } catch (err) {}
-      }
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', '#' + id);
-      setActive(id);
-      // keep active tab visible in horizontal scroller
-      a.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    });
-  });
-
-  // Hero jump links that are hashes
-  document.querySelectorAll('.hero-jump a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if (!el) return;
-      e.preventDefault();
-      if (typeof closeDetail === 'function') {
-        try { closeDetail(); } catch (err) {}
-      }
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', '#' + id);
-      setActive(id);
-    });
-  });
-
-  // Scroll spy
-  function onScroll() {
-    const y = window.scrollY + 90;
-    let current = sectionIds[0];
-    for (const id of sectionIds) {
-      const el = document.getElementById(id);
-      if (!el) continue;
-      if (el.offsetTop <= y) current = id;
-    }
-    setActive(current);
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('load', () => {
-    onScroll();
-    if (location.hash) {
-      const id = location.hash.slice(1);
-      const el = document.getElementById(id);
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setActive(id);
-        }, 80);
-      }
-    }
-  });
-  onScroll();
 })();
 
+/* cinema gate */
+const cinema = document.getElementById('cinema');
+function enterSite() {
+  cinema.classList.add('is-gone');
+  document.body.classList.remove('is-locked');
+  // Ensure overlay cannot intercept clicks after fade
+  setTimeout(function () {
+    if (cinema.classList.contains('is-gone')) cinema.style.display = 'none';
+  }, 1500);
+  try { sessionStorage.setItem('lon-cinema', '1'); } catch (e) {}
+}
+document.getElementById('enterBtn').addEventListener('click', enterSite);
+cinema.addEventListener('wheel', (e) => { e.preventDefault(); enterSite(); }, { passive: false });
+try {
+  if (sessionStorage.getItem('lon-cinema') === '1') {
+    cinema.classList.add('is-gone');
+    cinema.style.display = 'none';
+    document.body.classList.remove('is-locked');
+  }
+} catch (e) {}
+
+/* build chapters + exhibit nav */
+const chapters = document.getElementById('chapters');
+const exhibitNav = document.getElementById('exhibitNav');
+nine.forEach((p, i) => {
+  const navA = document.createElement('a');
+  navA.href = '#ch-' + p.n;
+  navA.dataset.n = p.n;
+  navA.dataset.section = 'ch-' + p.n;
+  navA.setAttribute('aria-label', p.n + ' ' + p.word);
+  navA.innerHTML = '<span class="nav-label">' + p.word + '</span>';
+  exhibitNav.appendChild(navA);
+
+  const ch = document.createElement('section');
+  ch.className = 'chapter';
+  ch.id = 'ch-' + p.n;
+  ch.dataset.env = p.env;
+  ch.innerHTML =
+    '<div class="chapter-bg" style="background-image:url(\'' + p.file + '\')"></div>' +
+    '<div class="chapter-veil"></div>' +
+    '<div class="chapter-mist"></div>' +
+    '<div class="glyph-float">' + glyphs[p.n] + '</div>' +
+    '<div class="chapter-content">' +
+      '<p class="meta"></p>' +
+      '<div class="ch-num">' + p.n + '</div>' +
+      '<div class="ch-word">' + p.word + '</div>' +
+      '<p class="ch-poem">' + p.poem + '</p>' +
+      '<div class="ffms-strip">' +
+        '<div><strong>Feel</strong><span>' + p.feel + '</span></div>' +
+        '<div><strong>Form</strong><span>' + p.form + '</span></div>' +
+        '<div><strong>Move</strong><span>' + p.micro + '</span></div>' +
+        '<div><strong>Sky</strong><span>' + p.sky + '</span></div>' +
+      '</div>' +
+      '<button class="ch-open" type="button" data-i="' + i + '">Deepen</button>' +
+    '</div>';
+  chapters.appendChild(ch);
+});
+
+// fill chapter meta
+nine.forEach((p, i) => {
+  const meta = document.querySelector('#ch-' + p.n + ' .meta');
+  if (meta) meta.textContent = (p.n === '9' ? 'Beyond the eight' : 'Mapped eight') + ' · ' + p.sky;
+});
+
+/* drawer */
+const drawer = document.getElementById('drawer');
+function openDrawer(i) {
+  const p = nine[i];
+  document.getElementById('dNum').textContent = p.n;
+  document.getElementById('dWord').textContent = p.word;
+  document.getElementById('dFeel').textContent = p.feel;
+  document.getElementById('dForm').textContent = p.form;
+  document.getElementById('dMove').textContent = p.move;
+  document.getElementById('dSky').textContent = p.sky;
+  document.getElementById('dAtmo').textContent = p.atmo;
+  drawer.classList.add('open');
+  drawer.setAttribute('aria-hidden', 'false');
+}
+function closeDrawer() {
+  drawer.classList.remove('open');
+  drawer.setAttribute('aria-hidden', 'true');
+}
+document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+drawer.addEventListener('click', (e) => { if (e.target === drawer) closeDrawer(); });
+document.querySelectorAll('.ch-open').forEach(btn => {
+  btn.addEventListener('click', () => openDrawer(+btn.dataset.i));
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+
+/* memory */
+const memoryGrid = document.getElementById('memoryGrid');
+const memoryOut = document.getElementById('memoryOut');
+const MEM_KEY = 'lon-today-form';
+const MEM_DAY = 'lon-today-day';
+
+function todayKey() {
+  const d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+}
+
+nine.forEach((p, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = p.n;
+  b.setAttribute('aria-label', 'Form ' + p.n + ' ' + p.word);
+  b.addEventListener('click', () => {
+    memoryGrid.querySelectorAll('button').forEach(x => x.classList.remove('picked'));
+    b.classList.add('picked');
+    memoryOut.innerHTML =
+      '<span style="font-family:IBM Plex Mono,monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:#C9A96A;">' +
+      p.n + ' · ' + p.word + '</span><br/>' + p.reflect +
+      '<br/><span style="opacity:0.75;font-size:1.05rem;">Practice: ' + p.micro + '</span>';
+    try {
+      localStorage.setItem(MEM_KEY, p.n);
+      localStorage.setItem(MEM_DAY, todayKey());
+    } catch (e) {}
+    showTodayBanner(p);
+  });
+  memoryGrid.appendChild(b);
+});
+
+function showTodayBanner(p) {
+  const ban = document.getElementById('todayBanner');
+  if (!ban || !p) return;
+  document.getElementById('tbN').textContent = p.n;
+  document.getElementById('tbW').textContent = p.word;
+  document.getElementById('tbM').textContent = p.micro;
+  ban.hidden = false;
+}
+
+// If no choice today, offer a gentle random "notice" without forcing
+(function initToday() {
+  try {
+    if (localStorage.getItem(MEM_DAY) === todayKey()) {
+      const saved = localStorage.getItem(MEM_KEY);
+      const p = nine.find(x => x.n === saved);
+      if (p) showTodayBanner(p);
+      return;
+    }
+  } catch (e) {}
+  // soft daily suggestion (not saved until user confirms in memory section)
+  const daySeed = todayKey().split('').reduce((a,c)=>a + c.charCodeAt(0), 0);
+  const p = nine[daySeed % nine.length];
+  const ban = document.getElementById('todayBanner');
+  if (ban && p) {
+    document.getElementById('tbN').textContent = p.n;
+    document.getElementById('tbW').textContent = p.word;
+    document.getElementById('tbM').textContent = 'Notice · ' + p.micro;
+    ban.hidden = false;
+  }
+})();
+
+try {
+  if (localStorage.getItem(MEM_DAY) === todayKey()) {
+    const saved = localStorage.getItem(MEM_KEY);
+    if (saved) {
+      const idx = nine.findIndex(p => p.n === saved);
+      if (idx >= 0) {
+        const btn = memoryGrid.children[idx];
+        if (btn) btn.click();
+      }
+    }
+  }
+} catch (e) {}
+
+/* sound (muted default — honest toast, no fake audio files required) */
+let soundOn = false;
+const soundBtn = document.getElementById('soundBtn');
+const toast = document.getElementById('soundToast');
+soundBtn.addEventListener('click', () => {
+  soundOn = !soundOn;
+  soundBtn.textContent = soundOn ? 'Sound on' : 'Sound off';
+  soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+  toast.textContent = soundOn
+    ? 'Imagine ambient nature for this chapter · files can be added later'
+    : 'Sound off · silence is the default';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2400);
+});
+
+/* scroll spy + tree progress + near chapter */
+const treeProgress = document.getElementById('treeProgress');
+const chapterEls = Array.from(document.querySelectorAll('.chapter'));
+const navLinks = Array.from(document.querySelectorAll('#exhibitNav a'));
+
+function onScroll() {
+  const y = window.scrollY + window.innerHeight * 0.35;
+  let current = 0;
+  chapterEls.forEach((ch, i) => {
+    const mid = ch.offsetTop + ch.offsetHeight * 0.25;
+    const near = Math.abs((window.scrollY + window.innerHeight * 0.5) - (ch.offsetTop + ch.offsetHeight * 0.5)) < ch.offsetHeight * 0.55;
+    ch.classList.toggle('is-near', near);
+    if (ch.offsetTop <= y) current = i;
+  });
+  navLinks.forEach((a, i) => a.classList.toggle('active', i === current));
+  treeProgress.textContent = treeStages[current] || '✦';
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+navLinks.forEach(a => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    closeDrawer();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 </script>
 </body>
 </html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manifesto — The Language of Nine</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #F3EBDD; --linen: #EFE6D6; --cedar: #3D2E24;
+    --clay: #6B4A38; --ash: #7A756C; --brass: #B8955A; --ink: #161411; --moss: #24382C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif; font-weight: 300;
+    background: var(--paper); color: var(--ink); line-height: 1.7;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.04; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap { position: relative; z-index: 1; max-width: 38rem; margin: 0 auto; padding: 3.5rem 1.4rem 6rem; }
+  nav {
+    display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.5rem;
+  }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ash);
+    text-decoration: none; border-bottom: 1px solid transparent;
+  }
+  nav a:hover { color: var(--ink); border-color: var(--brass); }
+  .label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--brass);
+    margin-bottom: 1.25rem;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400;
+    font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.15;
+    color: var(--cedar); margin-bottom: 2.5rem;
+  }
+  .verse {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+    line-height: 1.55; color: var(--cedar); margin-bottom: 2.5rem;
+  }
+  .verse em { font-style: normal; color: var(--brass); display: block; margin: 1.25rem 0 0; font-size: 0.95em; }
+  p { color: var(--clay); font-size: 1.02rem; margin-bottom: 1.25rem; max-width: 36em; }
+  h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500;
+    font-size: 1.35rem; color: var(--cedar); margin: 2.75rem 0 1rem;
+  }
+  .lang {
+    margin: 2.5rem 0; border-top: 1px solid rgba(61,46,36,0.12);
+    border-bottom: 1px solid rgba(61,46,36,0.12); padding: 1.5rem 0;
+  }
+  .lang div { margin-bottom: 1.1rem; }
+  .lang div:last-child { margin-bottom: 0; }
+  .lang strong {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--brass);
+    display: block; margin-bottom: 0.25rem; font-weight: 400;
+  }
+  .lang span {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.2rem; color: var(--ink);
+  }
+  .not {
+    background: rgba(36,56,44,0.06); padding: 1.25rem 1.35rem; margin: 2rem 0;
+  }
+  .not p { margin-bottom: 0.5rem; }
+  .not p:last-child { margin-bottom: 0; }
+  footer {
+    margin-top: 4rem; padding-top: 2rem;
+    border-top: 1px solid rgba(61,46,36,0.12);
+    font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+    font-size: 1.15rem; color: var(--cedar);
+  }
+  .cta { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cta a {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+    color: var(--moss); border: 1px solid rgba(36,56,44,0.25);
+    padding: 0.7rem 1rem;
+  }
+  .cta a:hover { border-color: var(--brass); color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="manifesto.html">Manifesto</a>
+    <a href="search.html">Search</a>
+    <a href="index.html#memory">Today</a>
+    <a href="products/index.html">Ecosystem</a>
+    <a href="products/meditation_cards.html">Cards</a>
+    <a href="system/IP_ROADMAP.md">Roadmap</a>
+  </nav>
+
+  <p class="label">The Manifesto</p>
+  <h1>We do not believe numbers have magic.</h1>
+
+  <div class="verse">
+    We believe attention has magic.
+    <em>A number appears.<br/>You remember.<br/>That moment changes you.</em>
+  </div>
+
+  <p>
+    The Language of Nine is not numerology. It does not predict your future,
+    rank your soul, or sell fear of missing a digit.
+  </p>
+  <p>
+    It is a <strong>symbolic mindfulness language</strong> — a way to turn ordinary
+    encounters (a clock, a door, a page, a receipt) into a five-second return to how you wish to live.
+  </p>
+
+  <h2>What we practice</h2>
+  <p>
+    Nine living forms. Each one carries the same four-layer design language —
+    on the website, on a card, on a wall, on a sleeve.
+  </p>
+
+  <div class="lang">
+    <div><strong>Feel</strong><span>The emotional medicine — the quality that softens the mind.</span></div>
+    <div><strong>Form</strong><span>The image and the glyph — nature and geometry as teachers.</span></div>
+    <div><strong>Move</strong><span>A five-second practice — tiny, embodied, real.</span></div>
+    <div><strong>Sky</strong><span>Mapped eight (Sun…Neptune), then beyond: Universe · the Unknown.</span></div>
+  </div>
+
+  <div class="not">
+    <p><strong>We do not</strong> invent a ninth planet.</p>
+    <p><strong>We do not</strong> claim the digit itself has power.</p>
+    <p><strong>We do</strong> claim that attention, repeated gently, reshapes a day.</p>
+  </div>
+
+  <h2>Why nine</h2>
+  <p>
+    One through nine is a complete living set for a personal language —
+    enough for a life of cues, small enough to remember with the body.
+  </p>
+  <p>
+    Form nine is not a planet. It is <em>beyond the eight</em>:
+    the Universe · the Unknown. Humility after every map.
+  </p>
+
+  <h2>What we are building</h2>
+  <p>
+    Not features at random. An intellectual property:
+    a visual language, a publishing platform, and eventually an ecosystem
+    of journals, decks, prints, and quiet tools — always the same four layers.
+  </p>
+  <p>
+    If you can recognize one of our posters without seeing a logo,
+    the language is working.
+  </p>
+
+  <div class="cta">
+    <a href="index.html">Walk the nine</a>
+    <a href="index.html#memory">Today’s number</a>
+    <a href="products/meditation_cards.html">Cards</a>
+    <a href="system/IP_ROADMAP.md">Phases</a>
+  </div>
+
+  <footer>
+    A number appears. You remember. That moment changes you.
+  </footer>
+</div>
+</body>
+</html>
